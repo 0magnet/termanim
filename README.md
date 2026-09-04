@@ -63,6 +63,69 @@ Made of characters, painting glyphs directly:
 
 `canvas` holds the surface, the palettes and the frame loop they share.
 
+## Behind other text
+
+`matrix/backdrop` composes text over the rain instead of replacing the screen
+with it. The text keeps a cell of clear either side of every word, so it stays
+readable, and the rain fills what the layout left empty. Two shapes use it, and
+both are in service.
+
+**A still frame behind a help screen.** `matrix/backdrop/cobrarain` wraps a
+cobra command's help function, buffers what it would have printed, and renders
+the rain behind it:
+
+```go
+cobrarain.On(rootCmd, backdrop.Options{})
+```
+
+That is the whole integration. Help for every command under the root goes
+through it, because cobra looks up the help function on the parent when a
+command has none of its own. `cmd/rainhelp` is a worked example — a CLI with
+nothing in it but that one call.
+
+It is a *still*: nothing takes over the terminal, nothing waits for a key, and
+the help scrolls up the scrollback the way help does. Seed it and the same
+frame comes back every time:
+
+```
+go run ./cmd/rainhelp --seed 1 --help     # the same frame every time
+go run ./cmd/rainhelp --help | cat        # plain, as a pipe should be
+```
+
+Redirecting or piping turns it off, so `--help | less` and a `--help` pasted
+into a bug report are both plain text. Wire it *after* anything else that
+styles the help — `coloredcobra`, say — since it captures whichever help
+function is installed when it is called.
+
+**An animated background behind a TUI.** `backdrop.New` returns a `Painter`
+that keeps the rain's state between frames, so a full-screen program can
+redraw its own text over a rain that keeps falling:
+
+```go
+p := backdrop.New(backdrop.Options{Pad: -1, GapMin: 4, Force: true})
+for {
+    io.WriteString(out, p.Frame(render(), dt)) // or p.Tick(render())
+}
+```
+
+`Frame` advances by elapsed time and `Tick` by one step, which is the same
+distinction the animations themselves draw — see **Frame rate** below. The
+options above are skywire's, which drives this under `skywire --tui`: `Pad: -1`
+and `GapMin: 4` because that program composes its own screen and tells the
+backdrop where the empty space is, and `Force: true` because it is undimmed —
+the clear cell either side of each word is what keeps the text legible, and
+`GapMin` already confines the rain to the gaps.
+
+**Only the rain, for now.** `backdrop` is written against `matrix` rather than
+against animations in general: it reads cells as `matrix.Cell`, which carries
+an `Intensity` and a `Hot` flag modelling a trail, and the shading is built on
+those. The other effects here are half-block color surfaces with no such
+model, so pointing the backdrop at `snow` or `starfield` needs a neutral cell
+type and a surface-to-cell adapter first, not just a different constructor.
+Sparse effects — `snow`, `rain`, `starfield`, `life`, `boids` — would suit it;
+the dense fields like `plasma` and `metaballs` would fight the text unless
+heavily dimmed.
+
 ## Two pixels per cell
 
 A terminal cell is about twice as tall as it is wide, so an animation drawn one
