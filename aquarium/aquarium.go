@@ -163,7 +163,7 @@ func New(seed int64) *Aquarium {
 	return &Aquarium{rng: rand.New(rand.NewSource(seed)), Fish: 8, StepRate: 20}
 }
 
-var fishColours = []tcell.Color{
+var fishColors = []tcell.Color{
 	tcell.NewRGBColor(255, 160, 0),
 	tcell.NewRGBColor(255, 80, 80),
 	tcell.NewRGBColor(120, 220, 255),
@@ -290,7 +290,7 @@ func (a *Aquarium) newFish(anywhere bool) fish {
 		s:     s,
 		y:     float64(a.pickRow(top, bottom, s.h)),
 		speed: speed,
-		color: fishColours[a.rng.Intn(len(fishColours))],
+		color: fishColors[a.rng.Intn(len(fishColors))],
 	}
 	switch {
 	case anywhere:

@@ -69,7 +69,7 @@ func TestPatternMovesBetweenFrames(t *testing.T) {
 // The vanishing point is the whole illusion: if it drifts off center the tube
 // stops being a tube and becomes a smear. Measured with the checker turned
 // off, so what is left is purely the radial falloff.
-func TestVanishingPointIsCentred(t *testing.T) {
+func TestVanishingPointIsCenterd(t *testing.T) {
 	tn := New(0)
 	tn.Contrast = 0
 	tn.Resize(tw, th)
@@ -91,10 +91,10 @@ func TestVanishingPointIsCentred(t *testing.T) {
 	}
 	cx, cy := sx/sw, sy/sw
 	if d := cx - tw/2; d < -1.5 || d > 1.5 {
-		t.Errorf("dark centre at x=%.2f, want %d", cx, tw/2)
+		t.Errorf("dark center at x=%.2f, want %d", cx, tw/2)
 	}
 	if d := cy - th/2; d < -1.5 || d > 1.5 {
-		t.Errorf("dark centre at y=%.2f, want %d", cy, th/2)
+		t.Errorf("dark center at y=%.2f, want %d", cy, th/2)
 	}
 }
 

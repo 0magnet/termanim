@@ -91,7 +91,7 @@ func TestManyStepsDisturbALargeArea(t *testing.T) {
 	}
 }
 
-func TestAntsPaintInTheirOwnColours(t *testing.T) {
+func TestAntsPaintInTheirOwnColors(t *testing.T) {
 	l := New(2)
 	l.Ants = 3
 	l.Resize(tw, th)

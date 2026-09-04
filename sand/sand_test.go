@@ -177,7 +177,7 @@ func TestPilesGrow(t *testing.T) {
 	}
 }
 
-func TestBandsAreColoured(t *testing.T) {
+func TestBandsAreColored(t *testing.T) {
 	s := New(3)
 	s.Resize(tw, th)
 	for i := 0; i < 400; i++ {

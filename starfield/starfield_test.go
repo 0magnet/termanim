@@ -18,7 +18,7 @@ const dt = 1.0 / 30
 // The one thing that separates this from random dots drifting about: a star's
 // distance from the vanishing point must grow every frame, for every star that
 // was not recycled.
-func TestStarsMoveOutwardFromCentre(t *testing.T) {
+func TestStarsMoveOutwardFromCenter(t *testing.T) {
 	f := New(1)
 	f.Resize(tw, th)
 	s := canvas.NewSurface(tw, th)

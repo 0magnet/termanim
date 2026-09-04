@@ -26,7 +26,7 @@ type Fire struct {
 
 	// acc carries the fraction of a simulation step left over from the last
 	// frame. The cooling rule is a discrete step — a cell becomes the average
-	// of its neighbours — so it cannot be run by a fractional amount; instead
+	// of its neighbors — so it cannot be run by a fractional amount; instead
 	// elapsed time accumulates and whole steps are taken from it.
 	acc float64
 

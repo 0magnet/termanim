@@ -62,7 +62,7 @@ func TestWallsComeDownOnBothSides(t *testing.T) {
 			if m.open[c]&(1<<uint(d)) == 0 {
 				continue
 			}
-			nb, ok := m.neighbour(c, d)
+			nb, ok := m.neighbor(c, d)
 			if !ok {
 				t.Fatalf("cell %d has a door in direction %d leading off the grid", c, d)
 			}
@@ -86,7 +86,7 @@ func reach(m *Maze) int {
 			if m.open[c]&(1<<uint(d)) == 0 {
 				continue
 			}
-			nb, ok := m.neighbour(c, d)
+			nb, ok := m.neighbor(c, d)
 			if !ok || seen[nb] {
 				continue
 			}
@@ -143,7 +143,7 @@ func TestSolverFindsAPath(t *testing.T) {
 }
 
 func TestPathIsContiguous(t *testing.T) {
-	// Every consecutive pair must be neighbours with the wall between them
+	// Every consecutive pair must be neighbors with the wall between them
 	// down; otherwise the drawn route jumps through a wall.
 	for seed := int64(10); seed < 16; seed++ {
 		m, s := newMaze(t, seed)
@@ -155,7 +155,7 @@ func TestPathIsContiguous(t *testing.T) {
 				if m.open[a]&(1<<uint(d)) == 0 {
 					continue
 				}
-				if nb, ok := m.neighbour(a, d); ok && nb == b {
+				if nb, ok := m.neighbor(a, d); ok && nb == b {
 					joined = true
 					break
 				}
@@ -186,7 +186,7 @@ func TestPathIsTheShortestRoute(t *testing.T) {
 			if m.open[c]&(1<<uint(d)) == 0 {
 				continue
 			}
-			nb, ok := m.neighbour(c, d)
+			nb, ok := m.neighbor(c, d)
 			if !ok || dist[nb] >= 0 {
 				continue
 			}

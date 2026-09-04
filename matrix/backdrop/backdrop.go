@@ -89,7 +89,7 @@ type Options struct {
 	// By default a pipe or a redirect gets the text back with no rain and
 	// nothing added, because `--help | less` and a --help pasted into a bug
 	// report both want plain text and neither wants two hundred color
-	// changes a line. NO_COLOR and TERM=dumb are honoured the same way.
+	// changes a line. NO_COLOR and TERM=dumb are honored the same way.
 	Force bool
 
 	// Words makes the rain spell words instead of glyphs: each stream carries

@@ -275,7 +275,7 @@ func run(screen tcell.Screen, opt Options, resize func(cols, rows int), frame fu
 	resize(cols, rows)
 
 	// An animation has no text entry, so a cursor parked in it is only ever a
-	// blinking artefact sitting on top of the picture. It belongs here rather
+	// blinking artifact sitting on top of the picture. It belongs here rather
 	// than in each host: tcell leaves the cursor wherever it was, so every
 	// caller that forgot would show one, and the terminal running these is
 	// often not the caller's own — a pane, a window in a page, a texture in a
@@ -284,7 +284,7 @@ func run(screen tcell.Screen, opt Options, resize func(cols, rows int), frame fu
 	screen.HideCursor()
 
 	// Events come over a channel so the frame loop never blocks waiting for one.
-	// tcell closes it when the screen is finalised, which is how a closed pane
+	// tcell closes it when the screen is finalized, which is how a closed pane
 	// ends this goroutine instead of leaving it spinning forever.
 	events := screen.EventQ()
 

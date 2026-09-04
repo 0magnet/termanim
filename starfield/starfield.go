@@ -60,7 +60,7 @@ type Starfield struct {
 	rng   *rand.Rand
 
 	// Density is stars per thousand pixels. Counting in pixels rather than
-	// fixing a total keeps a maximised window as thick with stars as a small
+	// fixing a total keeps a maximized window as thick with stars as a small
 	// one, instead of leaving a few lonely dots in a large void.
 	Density float64
 	// Speed multiplies how fast the field approaches. 1 is a comfortable

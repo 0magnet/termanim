@@ -107,7 +107,7 @@ func TestBurstIsRadial(t *testing.T) {
 	}
 }
 
-func TestOneBurstIsOneColour(t *testing.T) {
+func TestOneBurstIsOneColor(t *testing.T) {
 	f := quiet(4)
 	f.Resize(tw, th)
 	s := canvas.NewSurface(tw, th)

@@ -137,7 +137,7 @@ func TestTheBankIsDrawnAtTheBottom(t *testing.T) {
 
 func TestDriftsDoNotStandAsCliffs(t *testing.T) {
 	// Settling is what rounds the bank off. A column left two or more pixels
-	// above its neighbour for long is snow behaving like masonry.
+	// above its neighbor for long is snow behaving like masonry.
 	s := New(7)
 	s.Resize(tw, th)
 	surf := canvas.NewSurface(tw, th)

@@ -81,7 +81,7 @@ type Langton struct {
 
 // antColors are the base hues ants paint with, in order. Ants past the end of
 // the list wrap round and reuse a hue, which only happens with a lot of ants.
-var antColours = [][3]int{
+var antColors = [][3]int{
 	{255, 96, 72},
 	{88, 208, 255},
 	{255, 214, 96},
@@ -124,7 +124,7 @@ func (l *Langton) Resize(w, h int) {
 			l.ants[i].x = l.rng.Intn(w)
 			l.ants[i].y = l.rng.Intn(h)
 		}
-		c := antColours[i%len(antColours)]
+		c := antColors[i%len(antColors)]
 		// Each ramp runs from a very dark version of the hue to a washed-out
 		// bright one, so intensity reads as recency while the hue stays the
 		// signature of which ant did the work.

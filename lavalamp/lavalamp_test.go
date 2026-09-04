@@ -168,7 +168,7 @@ func TestWaxCirculates(t *testing.T) {
 		hi = math.Max(hi, b.y)
 	}
 	if hi-lo < 0.5*th {
-		t.Errorf("wax travelled only %.1f of %d rows: it is not circulating", hi-lo, th)
+		t.Errorf("wax traveled only %.1f of %d rows: it is not circulating", hi-lo, th)
 	}
 }
 

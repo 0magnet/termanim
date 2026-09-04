@@ -60,7 +60,7 @@ func TestNotATerminalIsPassedThrough(t *testing.T) {
 
 // Text that already has color keeps it, and its escapes are not counted as
 // columns. This is the coloredcobra case.
-func TestStyledTextKeepsItsColours(t *testing.T) {
+func TestStyledTextKeepsItsColors(t *testing.T) {
 	const styled = "\x1b[1;33mUsage:\x1b[0m\n  thing [flags]\n"
 	out := Render(styled, Options{Force: true, Seed: 5, Width: 70})
 
@@ -73,7 +73,7 @@ func TestStyledTextKeepsItsColours(t *testing.T) {
 	// that row seven columns over and take seven cells of rain with it.
 	plain := Render(strip(styled), Options{Force: true, Seed: 5, Width: 70})
 	if strip(out) != strip(plain) {
-		t.Errorf("colouring a word changed the layout\n got: %q\nwant: %q",
+		t.Errorf("coloring a word changed the layout\n got: %q\nwant: %q",
 			strip(out), strip(plain))
 	}
 }
@@ -114,11 +114,11 @@ func TestSeedDecidesTheFrame(t *testing.T) {
 // A space inside a colored run must not end the color. A styler colors
 // "-h, --help" once, at the dash; resetting at the space left everything
 // after it uncolored, which is worse than not coloring at all.
-func TestSpaceDoesNotBreakAColouredRun(t *testing.T) {
+func TestSpaceDoesNotBreakAColoredRun(t *testing.T) {
 	const in = "  \x1b[36m-h, --help\x1b[0m   help for it\n"
 	out := Render(in, Options{Force: true, Seed: 2, Width: 60})
 	if !strings.Contains(out, "\x1b[36m-h, --help") {
-		t.Errorf("the coloured run was broken up:\n%q", out)
+		t.Errorf("the colored run was broken up:\n%q", out)
 	}
 }
 

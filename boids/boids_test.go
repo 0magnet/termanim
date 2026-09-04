@@ -66,7 +66,7 @@ func order(b *Boids) float64 {
 	return math.Hypot(sx, sy) / float64(len(b.flock))
 }
 
-// crowding is the average number of neighbours each boid has inside the
+// crowding is the average number of neighbors each boid has inside the
 // perception radius. It rises as the boids gather, and is not fooled by a flock
 // that has split into several groups the way a distance to a global center is.
 func crowding(b *Boids) float64 {
@@ -122,13 +122,13 @@ func TestBoidsGatherIntoAFlock(t *testing.T) {
 	}
 	after := crowding(b)
 	if after <= before {
-		t.Fatalf("boids did not gather: neighbours per boid %.2f -> %.2f", before, after)
+		t.Fatalf("boids did not gather: neighbors per boid %.2f -> %.2f", before, after)
 	}
 }
 
 func TestSeparationKeepsThemApart(t *testing.T) {
 	// The other half of the previous test: a flock that has formed must not be
-	// a single point. Averaged over the flock, neighbours should sit around the
+	// a single point. Averaged over the flock, neighbors should sit around the
 	// separation distance rather than on top of each other.
 	b := New(5)
 	b.Count = 40
@@ -154,7 +154,7 @@ func TestSeparationKeepsThemApart(t *testing.T) {
 	}
 	avg := sum / float64(len(b.flock))
 	if avg < 0.5 {
-		t.Errorf("flock collapsed: average nearest neighbour %.3f pixels", avg)
+		t.Errorf("flock collapsed: average nearest neighbor %.3f pixels", avg)
 	}
 }
 
@@ -215,7 +215,7 @@ func TestDeterministicForAGivenSeed(t *testing.T) {
 
 func TestSurvivesATinyWindow(t *testing.T) {
 	// The grid has fewer than three cells on an axis here, which is the case
-	// the wrapping neighbour scan has to special-case, and Resize may be handed
+	// the wrapping neighbor scan has to special-case, and Resize may be handed
 	// a degenerate size before the first frame.
 	for _, sz := range [][2]int{{1, 1}, {4, 4}, {8, 6}, {0, 0}} {
 		b := New(7)

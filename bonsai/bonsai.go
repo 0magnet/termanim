@@ -142,7 +142,7 @@ type Bonsai struct {
 	TrunkBranchChance int
 	// ShootBranchChance is the same for shoots. Deliberately close to the
 	// trunk's: a shoot that splits far more often than the trunk fills its own
-	// neighbourhood with twigs and the tree turns into a hedge.
+	// neighborhood with twigs and the tree turns into a hedge.
 	ShootBranchChance int
 	// LeafDensity is how many leaf characters a dead tip puts out.
 	LeafDensity int

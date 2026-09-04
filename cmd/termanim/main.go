@@ -48,7 +48,7 @@ type anim struct {
 }
 
 // noSeed adapts the two animations that are a pure function of time and have
-// nothing to randomise.
+// nothing to randomize.
 func noSeed(f func(tcell.Screen) error) func(tcell.Screen, int64) error {
 	return func(s tcell.Screen, _ int64) error { return f(s) }
 }
@@ -64,13 +64,13 @@ var anims = map[string]anim{
 	"fireworks": {fireworks.Run, "shells that rise, burst and droop"},
 	"langton":   {langton.Run, "Langton's ants, chaos then a highway"},
 	"lavalamp":  {lavalamp.Run, "wax rising and sinking in a lamp"},
-	"life":      {life.Run, "Conway's life, coloured by age"},
+	"life":      {life.Run, "Conway's life, colored by age"},
 	"matrix":    {matrix.Run, "falling columns of glyphs"},
 	"maze":      {maze.Run, "a maze carved, then solved"},
 	"metaballs": {metaballs.Run, "blobs that bulge and merge"},
 	"moire":     {noSeed(moire.Run), "two overlapping ripples interfering"},
 	"pipes":     {pipes.Run, "pipes growing and turning"},
-	"plasma":    {noSeed(plasma.Run), "the drifting coloured field of the demoscene"},
+	"plasma":    {noSeed(plasma.Run), "the drifting colored field of the demoscene"},
 	"rain":      {rain.Run, "rain with depth, slant and splashes"},
 	"sand":      {sand.Run, "falling sand heaping at its angle of repose"},
 	"snow":      {snow.Run, "snow that drifts and settles into banks"},

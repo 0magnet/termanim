@@ -94,14 +94,14 @@ func TestTheMinuteHandPointsUpAtTwelve(t *testing.T) {
 		}
 	}
 	if !up {
-		t.Error("at twelve the minute hand does not point up the centre column")
+		t.Error("at twelve the minute hand does not point up the center column")
 	}
 	if !down {
 		t.Error("at half a minute past the second hand does not point down")
 	}
 	for y := cy + 1; y < th; y++ {
 		if []rune(rows[y])[cx] == 'm' {
-			t.Errorf("the minute hand reaches below the centre, at row %d", y)
+			t.Errorf("the minute hand reaches below the center, at row %d", y)
 		}
 	}
 }
@@ -120,11 +120,11 @@ func TestHourHandPointsRightAtThree(t *testing.T) {
 		}
 	}
 	if !right {
-		t.Error("at three the hour hand does not point right along the centre row")
+		t.Error("at three the hour hand does not point right along the center row")
 	}
 	for x := 0; x < cx; x++ {
 		if []rune(rows[cy])[x] == 'h' {
-			t.Errorf("at three there is an hour hand to the left of centre, at column %d", x)
+			t.Errorf("at three there is an hour hand to the left of center, at column %d", x)
 		}
 	}
 }
