@@ -325,12 +325,12 @@ func paint(m *matrix.Matrix, s sheet, _ Options) string {
 					// effect rather than resetting to default. Resetting
 					// breaks a colored run at its first space: the styler
 					// colored "-h, --help" once, at the dash, and everything
-					// after the space would come out uncoloured.
+					// after the space would come out uncolored.
 					//
 					// And a blank CARRIES any escapes attached to it: stylers
 					// open their span on the space BEFORE a word (coloredcobra
 					// emits " \x1b[94;1m -b," — the escape lands on the inner
-					// space), and dropping those uncoloured every flag name
+					// space), and dropping those uncolored every flag name
 					// the help had.
 					if i >= 0 && i < len(line) && line[i].pre != "" {
 						b.WriteString(line[i].pre)

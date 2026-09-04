@@ -211,7 +211,7 @@ their artwork is used: the fish here are drawn from scratch and are
 deliberately simpler than `asciiquarium`'s. That is why this repository can be
 MIT.
 
-## Licence
+## License
 
 MIT — see [LICENSE](LICENSE).
 

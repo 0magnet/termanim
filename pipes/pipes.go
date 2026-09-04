@@ -109,7 +109,7 @@ func (s Set) glyph(in, out Dir) rune {
 
 // Colors are the hues a pipe can take. They are bright and well separated so
 // that two pipes crossing are still telling apart.
-var Colours = []tcell.Color{
+var Colors = []tcell.Color{
 	tcell.NewRGBColor(255, 90, 90),
 	tcell.NewRGBColor(90, 255, 130),
 	tcell.NewRGBColor(110, 170, 255),
@@ -121,16 +121,16 @@ var Colours = []tcell.Color{
 
 // pipe is one growing run.
 type pipe struct {
-	x, y   int
-	dir    Dir
-	set    Set
-	colour tcell.Color
+	x, y  int
+	dir   Dir
+	set   Set
+	color tcell.Color
 }
 
 // cell is what has been painted at one position.
 type cell struct {
-	r      rune
-	colour tcell.Color
+	r     rune
+	color tcell.Color
 }
 
 // Pipes is the animation. The zero value is not usable; call New.
@@ -162,10 +162,10 @@ type Pipes struct {
 	// 7 means roughly one step in seven. Much lower and the pipes are a maze of
 	// stubs; much higher and they are straight lines that never bend.
 	TurnChance int
-	// ColourChance is the chance of changing color at a corner, as a
+	// ColorChance is the chance of changing color at a corner, as a
 	// reciprocal. Changing only at corners is what makes it read as a joint in
 	// the plumbing rather than as the pipe flickering.
-	ColourChance int
+	ColorChance int
 	// FillFraction is how much of the screen must be covered before it is wiped
 	// and started again. Pipes cross their own trails constantly, so waiting for
 	// the whole screen would take far longer than it looks like it should.
@@ -173,7 +173,7 @@ type Pipes struct {
 	// Sets are the glyph weights a new pipe may be drawn in.
 	Sets []Set
 	// Colors are the hues a new pipe may take.
-	Colours []tcell.Color
+	Colors []tcell.Color
 }
 
 // New returns a pipes animation. seed of 0 gives a fixed sequence, which makes
@@ -183,10 +183,10 @@ func New(seed int64) *Pipes {
 		rng:            rand.New(rand.NewSource(seed)),
 		StepsPerSecond: 20,
 		TurnChance:     7,
-		ColourChance:   3,
+		ColorChance:    3,
 		FillFraction:   0.55,
 		Sets:           []Set{Light, Heavy},
-		Colours:        Colours,
+		Colors:         Colors,
 	}
 }
 
@@ -228,9 +228,9 @@ func (p *Pipes) reset() {
 
 func (p *Pipes) newPipe(anywhere bool) pipe {
 	q := pipe{
-		dir:    Dir(p.rng.Intn(4)),
-		set:    p.Sets[p.rng.Intn(len(p.Sets))],
-		colour: p.Colours[p.rng.Intn(len(p.Colours))],
+		dir:   Dir(p.rng.Intn(4)),
+		set:   p.Sets[p.rng.Intn(len(p.Sets))],
+		color: p.Colors[p.rng.Intn(len(p.Colors))],
 	}
 	if anywhere {
 		q.x, q.y = p.rng.Intn(p.cols), p.rng.Intn(p.rows)
@@ -260,7 +260,7 @@ func (p *Pipes) put(x, y int, r rune, c tcell.Color) {
 	if p.buf[i].r == 0 {
 		p.filled++
 	}
-	p.buf[i] = cell{r: r, colour: c}
+	p.buf[i] = cell{r: r, color: c}
 }
 
 // step draws the cell the pipe is standing on and moves it one cell on.
@@ -268,11 +268,11 @@ func (p *Pipes) step(q *pipe) {
 	out := q.dir
 	if p.rng.Intn(p.TurnChance) == 0 {
 		out = q.dir.turn(p.rng.Intn(2) == 0)
-		if p.rng.Intn(p.ColourChance) == 0 {
-			q.colour = p.Colours[p.rng.Intn(len(p.Colours))]
+		if p.rng.Intn(p.ColorChance) == 0 {
+			q.color = p.Colors[p.rng.Intn(len(p.Colors))]
 		}
 	}
-	p.put(q.x, q.y, q.set.glyph(q.dir, out), q.colour)
+	p.put(q.x, q.y, q.set.glyph(q.dir, out), q.color)
 	q.dir = out
 	q.x += delta[out][0]
 	q.y += delta[out][1]
@@ -334,7 +334,7 @@ func (p *Pipes) draw(screen tcell.Screen) {
 				screen.Put(x, y, canvas.Blank, tcell.StyleDefault) //nolint:errcheck // one cell cannot fail
 				continue
 			}
-			canvas.PutRune(screen, x, y, c.r, tcell.StyleDefault.Foreground(c.colour))
+			canvas.PutRune(screen, x, y, c.r, tcell.StyleDefault.Foreground(c.color))
 		}
 	}
 }

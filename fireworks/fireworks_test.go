@@ -112,14 +112,14 @@ func TestOneBurstIsOneColour(t *testing.T) {
 	f.Resize(tw, th)
 	s := canvas.NewSurface(tw, th)
 	f.launch()
-	want := f.shells[0].colour
+	want := f.shells[0].color
 	for len(f.shells) > 0 {
 		f.Frame(s, dt)
 	}
 	for i, p := range f.particles {
-		if p.colour != want {
+		if p.color != want {
 			t.Fatalf("particle %d is %v, but the shell was %v: the burst is confetti",
-				i, p.colour, want)
+				i, p.color, want)
 		}
 	}
 }
@@ -328,7 +328,7 @@ func TestParticlesFlyTheSameDistanceAtAnyFrameRate(t *testing.T) {
 		f.Resize(tw, th)
 		f.particles = append(f.particles[:0], particle{
 			x: 32, y: 24, vx: 20, vy: -10,
-			life: 1, decay: 0.5, colour: color.White,
+			life: 1, decay: 0.5, color: color.White,
 		})
 		s := canvas.NewSurface(tw, th)
 		for i := 0; i < frames; i++ {

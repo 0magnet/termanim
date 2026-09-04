@@ -172,7 +172,7 @@ func TestFishBodiesOccludeTheBackground(t *testing.T) {
 	}
 	a.fish = []fish{{
 		s: deep, x: float64(x - 2), y: float64(th - deep.h),
-		speed: 0.3, colour: color.White,
+		speed: 0.3, color: color.White,
 	}}
 	a.Frame(s, tw, th, dt)
 	s.Show()

@@ -380,7 +380,7 @@ func (m *Maze) Frame(s *canvas.Surface, dt float64) {
 	m.draw(s)
 }
 
-// colourFor is the color a cell in this state is drawn in.
+// colorFor is the color a cell in this state is drawn in.
 func (m *Maze) colourFor(st uint8) tcell.Color {
 	switch st {
 	case carved:

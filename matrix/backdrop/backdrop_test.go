@@ -113,7 +113,7 @@ func TestSeedDecidesTheFrame(t *testing.T) {
 
 // A space inside a colored run must not end the color. A styler colors
 // "-h, --help" once, at the dash; resetting at the space left everything
-// after it uncoloured, which is worse than not coloring at all.
+// after it uncolored, which is worse than not coloring at all.
 func TestSpaceDoesNotBreakAColouredRun(t *testing.T) {
 	const in = "  \x1b[36m-h, --help\x1b[0m   help for it\n"
 	out := Render(in, Options{Force: true, Seed: 2, Width: 60})

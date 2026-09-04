@@ -159,7 +159,7 @@ func (r *Rain) brightness(d drop) float64 {
 	return 0.12 + d.depth*d.depth*0.88
 }
 
-func (r *Rain) colour(v float64) tcell.Color {
+func (r *Rain) color(v float64) tcell.Color {
 	i := int(v * 255)
 	if i < 0 {
 		i = 0
@@ -246,7 +246,7 @@ func (r *Rain) draw(s *canvas.Surface) {
 			if x < 0 {
 				x += int(r.w)
 			}
-			s.Set(x, y, r.colour(v))
+			s.Set(x, y, r.color(v))
 		}
 	}
 
@@ -254,7 +254,7 @@ func (r *Rain) draw(s *canvas.Surface) {
 		// A splash opens outwards and dims as it does, so the mark reads as
 		// water thrown sideways rather than a blinking dot.
 		f := 1 - sp.age/r.SplashLife
-		c := r.colour(0.5 + f*0.5)
+		c := r.color(0.5 + f*0.5)
 		x := int(sp.x)
 		s.Set(x, h-1, c)
 		// The crown widens at a fixed rate in pixels a second, so it opens the

@@ -145,7 +145,7 @@ func (s *Snow) newFlake() flake {
 	}
 }
 
-func (s *Snow) colour(v float64) tcell.Color {
+func (s *Snow) color(v float64) tcell.Color {
 	i := int(v * 255)
 	if i < 0 {
 		i = 0
@@ -266,7 +266,7 @@ func (s *Snow) draw(surf *canvas.Surface) {
 			// it darkens downwards into the bank; shading it the other way up
 			// lights the buried snow and the drift reads as a flat white bar.
 			v := 1 - float64(d-1-i)/float64(s.maxDepth()+2)*0.55
-			surf.Set(x, h-1-i, s.colour(v))
+			surf.Set(x, h-1-i, s.color(v))
 		}
 	}
 
@@ -280,7 +280,7 @@ func (s *Snow) draw(surf *canvas.Surface) {
 		if y < 0 {
 			continue
 		}
-		surf.Set(int(math.Floor(f.at())), y, s.colour(v))
+		surf.Set(int(math.Floor(f.at())), y, s.color(v))
 	}
 }
 

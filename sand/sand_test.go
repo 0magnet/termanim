@@ -190,7 +190,7 @@ func TestBandsAreColoured(t *testing.T) {
 		}
 	}
 	if len(seen) < 3 {
-		t.Fatalf("only %d grain colours in the box; the piles will not be banded", len(seen))
+		t.Fatalf("only %d grain colors in the box; the piles will not be banded", len(seen))
 	}
 }
 

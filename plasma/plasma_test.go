@@ -63,7 +63,7 @@ func TestUsesTheWholeRamp(t *testing.T) {
 		}
 	}
 	if len(seen) < 32 {
-		t.Errorf("only %d distinct colours in four seconds; the field is too flat", len(seen))
+		t.Errorf("only %d distinct colors in four seconds; the field is too flat", len(seen))
 	}
 }
 

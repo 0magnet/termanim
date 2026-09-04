@@ -79,7 +79,7 @@ type Langton struct {
 	MinIntensity int
 }
 
-// antColours are the base hues ants paint with, in order. Ants past the end of
+// antColors are the base hues ants paint with, in order. Ants past the end of
 // the list wrap round and reuse a hue, which only happens with a lot of ants.
 var antColours = [][3]int{
 	{255, 96, 72},

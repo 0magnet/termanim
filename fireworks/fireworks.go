@@ -31,7 +31,7 @@ import (
 // Colors are the shell colors, one per firework. They are saturated and
 // bright because everything drawn from them is a fade towards black: a muted
 // starting color has no range to fade through and dies immediately.
-var Colours = []tcell.Color{
+var Colors = []tcell.Color{
 	tcell.NewRGBColor(255, 80, 80),   // red
 	tcell.NewRGBColor(255, 190, 60),  // gold
 	tcell.NewRGBColor(120, 255, 130), // green
@@ -54,7 +54,7 @@ type shell struct {
 	x, y   float64
 	vx, vy float64 // pixels per second; vy is negative while climbing
 	trail  float64 // embers owed: see Frame
-	colour tcell.Color
+	color  tcell.Color
 }
 
 type particle struct {
@@ -62,7 +62,7 @@ type particle struct {
 	vx, vy float64 // pixels per second
 	life   float64 // 1 at birth, 0 when gone
 	decay  float64 // life lost per second
-	colour tcell.Color
+	color  tcell.Color
 }
 
 // flash is the light of a burst: no motion, just a disc that fades over a few
@@ -72,7 +72,7 @@ type flash struct {
 	x, y   float64
 	life   float64
 	radius float64
-	colour tcell.Color
+	color  tcell.Color
 }
 
 // Fireworks is the animation. The zero value is not usable; call New.
@@ -159,9 +159,9 @@ func (f *Fireworks) launch() {
 		x: f.w * (0.1 + f.rng.Float64()*0.8),
 		y: f.h - 1,
 		// A little sideways drift, so shells do not all rise in parallel lines.
-		vx:     (f.rng.Float64()*2 - 1) * f.h * 0.12,
-		vy:     -math.Sqrt(2 * g * rise),
-		colour: Colours[f.rng.Intn(len(Colours))],
+		vx:    (f.rng.Float64()*2 - 1) * f.h * 0.12,
+		vy:    -math.Sqrt(2 * g * rise),
+		color: Colors[f.rng.Intn(len(Colors))],
 	})
 }
 
@@ -173,7 +173,7 @@ func (f *Fireworks) explode(s shell) {
 			// The flash is small next to the burst it starts: it is the light
 			// at the center, not the shape of the explosion.
 			radius: f.h * 0.08,
-			colour: s.colour,
+			color:  s.color,
 		})
 	}
 	for i := 0; i < f.burst; i++ {
@@ -192,8 +192,8 @@ func (f *Fireworks) explode(s shell) {
 			vx: math.Cos(a)*v + s.vx*0.5,
 			vy: math.Sin(a)*v + s.vy*0.5,
 			// The color of the shell, so one firework is one color.
-			colour: s.colour,
-			life:   1,
+			color: s.color,
+			life:  1,
 			// Life lost per second: a spark lasts between one and a half and
 			// three seconds. Lives differ by a factor of two or so, which is
 			// what makes the burst thin out unevenly and hang in the air
@@ -250,10 +250,10 @@ func (f *Fireworks) Frame(s *canvas.Surface, dt float64) {
 			f.particles = append(f.particles, particle{
 				x: sh.x, y: sh.y,
 				// Embers sink out of the shell's wake rather than hanging.
-				vy:     f.h * 0.04,
-				colour: sh.colour,
-				life:   0.7,
-				decay:  2.7,
+				vy:    f.h * 0.04,
+				color: sh.color,
+				life:  0.7,
+				decay: 2.7,
 			})
 		}
 		// Burst at the top of the arc, where the climb has run out. Waiting for
@@ -334,7 +334,7 @@ func (f *Fireworks) draw(s *canvas.Surface) {
 				// White at the core shading out to the shell's color at the
 				// rim: a flash is hot enough to wash its own color out.
 				v := fl.life * (1 - d/float64(r+1))
-				c := fade(fl.colour, v)
+				c := fade(fl.color, v)
 				if d < float64(r)/2 {
 					c = fade(tcell.NewRGBColor(255, 255, 255), v)
 				}
@@ -349,7 +349,7 @@ func (f *Fireworks) draw(s *canvas.Surface) {
 		// The square root holds a spark near full brightness for most of its
 		// life and then drops it away at the end. A linear fade spends the
 		// whole burst in a dull mid tone.
-		s.Set(int(p.x), int(p.y), fade(p.colour, math.Sqrt(p.life)))
+		s.Set(int(p.x), int(p.y), fade(p.color, math.Sqrt(p.life)))
 	}
 
 	for _, sh := range f.shells {

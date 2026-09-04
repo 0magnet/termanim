@@ -111,7 +111,7 @@ func TestAntsPaintInTheirOwnColours(t *testing.T) {
 		t.Fatalf("%d palettes for 3 ants", len(l.pals))
 	}
 	if l.pals[0][255] == l.pals[1][255] {
-		t.Error("two ants share a colour")
+		t.Error("two ants share a color")
 	}
 }
 

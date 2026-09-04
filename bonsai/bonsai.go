@@ -100,8 +100,8 @@ type branch struct {
 
 // glyphCell is one painted position.
 type glyphCell struct {
-	r      rune
-	colour tcell.Color
+	r     rune
+	color tcell.Color
 }
 
 // Bonsai is the animation. The zero value is not usable; call New.
@@ -219,7 +219,7 @@ func (b *Bonsai) put(x, y int, r rune, c tcell.Color) {
 	if b.buf[i].r == 0 {
 		b.occupied++
 	}
-	b.buf[i] = glyphCell{r: r, colour: c}
+	b.buf[i] = glyphCell{r: r, color: c}
 }
 
 // leafCluster puts a blob of leaves around a dead tip. Wider than it is tall
@@ -437,7 +437,7 @@ func (b *Bonsai) draw(screen tcell.Screen) {
 				screen.Put(x, y, canvas.Blank, tcell.StyleDefault) //nolint:errcheck // one cell cannot fail
 				continue
 			}
-			canvas.PutRune(screen, x, y, c.r, tcell.StyleDefault.Foreground(c.colour))
+			canvas.PutRune(screen, x, y, c.r, tcell.StyleDefault.Foreground(c.color))
 		}
 	}
 }
