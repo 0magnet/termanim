@@ -6,6 +6,19 @@ because they never create or destroy the screen they are given — equally in a
 browser through [tuiwasm](https://github.com/0magnet/tuiwasm) or inside any
 program that already owns a `tcell.Screen`.
 
+**Live demo** — every animation here runs in a browser tab as part of
+[tuiwasm](https://0magnet.github.io/tuiwasm/), which registers them from this
+package. Each has a page of its own:
+[matrix](https://0magnet.github.io/tuiwasm/?demo=matrix) ·
+[donut](https://0magnet.github.io/tuiwasm/?demo=donut) ·
+[fireworks](https://0magnet.github.io/tuiwasm/?demo=fireworks) ·
+[aquarium](https://0magnet.github.io/tuiwasm/?demo=aquarium) ·
+[boids](https://0magnet.github.io/tuiwasm/?demo=boids) ·
+[plasma](https://0magnet.github.io/tuiwasm/?demo=plasma) ·
+[starfield](https://0magnet.github.io/tuiwasm/?demo=starfield) ·
+[life](https://0magnet.github.io/tuiwasm/?demo=life) — and the rest from the
+launcher there.
+
 ```sh
 go install github.com/0magnet/termanim/cmd/termanim@latest
 
