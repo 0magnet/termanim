@@ -116,15 +116,39 @@ backdrop where the empty space is, and `Force: true` because it is undimmed —
 the clear cell either side of each word is what keeps the text legible, and
 `GapMin` already confines the rain to the gaps.
 
-**Only the rain, for now.** `backdrop` is written against `matrix` rather than
-against animations in general: it reads cells as `matrix.Cell`, which carries
-an `Intensity` and a `Hot` flag modeling a trail, and the shading is built on
-those. The other effects here are half-block color surfaces with no such
-model, so pointing the backdrop at `snow` or `starfield` needs a neutral cell
-type and a surface-to-cell adapter first, not just a different constructor.
-Sparse effects — `snow`, `rain`, `starfield`, `life`, `boids` — would suit it;
-the dense fields like `plasma` and `metaballs` would fight the text unless
-heavily dimmed.
+**Any of the pixel animations, not just the rain.** `RenderAnim` is `Render`
+with something else behind the text, and `NewFor` is `New` the same way:
+
+```go
+fmt.Print(backdrop.RenderAnim(help, starfield.New(0), backdrop.Options{}))
+
+p := backdrop.NewFor(plasma.New(), backdrop.Options{Pad: -1, GapMin: 4})
+```
+
+Anything implementing `canvas.Animation` works, which is sixteen of the effects
+here and anything you write. What made this possible was giving the compositor
+a cell type of its own: it used to read `matrix.Cell`, which carries an
+`Intensity` into a green ramp and a `Hot` flag for the highlighted leading
+glyph — the rain's own vocabulary, asking questions a plasma cannot answer.
+`backdrop.Cell` is a glyph and the colors to draw it in, `backdrop.Frame` is a
+grid of those, and the two adapters that fill one — `Frame.FromMatrix` and
+`Frame.FromSurface` — are where each animation's own model is resolved. Fill a
+`Frame` yourself and `RenderFrame` will composite over it.
+
+`FromSurface` is the half-block trick working under text rather than on a
+screen of its own: two pixel rows to the cell row, and a cell with one pixel
+lit drawn as whichever block leaves the other half to the terminal.
+
+Sparse effects suit this best — `snow`, `rain`, `starfield`, `life`,
+`fireworks`, `boids` leave most cells clear, which is what makes a backdrop
+read as something *behind*. The dense fields, `plasma` and `metaballs` and
+`fire`, cover every cell and put the text on a solid field; `Dim` and `GapMin`
+are the knobs for that. `Warm` is the pixel animations' equivalent of `Steps`,
+since they open on an empty screen and take a second to fill.
+
+The four `CellAnimation` effects — `aquarium`, `pipes`, `clock`, `bonsai` —
+paint a `tcell.Screen` rather than a surface and are still out of reach. They
+would need a screen-to-cell adapter, which is a different piece of work.
 
 ## Two pixels per cell
 

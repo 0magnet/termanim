@@ -28,6 +28,15 @@ const (
 	lowerHalf = '▄'
 )
 
+// UpperHalf and LowerHalf are those two glyphs, exported for a consumer that
+// has to draw a surface somewhere other than a screen — matrix/backdrop
+// composites one into a string of its own and has to make the same choice
+// between them that flush does.
+const (
+	UpperHalf = upperHalf
+	LowerHalf = lowerHalf
+)
+
 // The same two glyphs as strings, because that is what the screen is given.
 //
 // SetContent takes a rune and is deprecated for it: internally it does
