@@ -19,6 +19,7 @@ import (
 	"fmt"
 	"os"
 
+	cc "github.com/0magnet/coloredcobra"
 	"github.com/spf13/cobra"
 
 	"github.com/0magnet/termanim/matrix/backdrop"
@@ -71,6 +72,23 @@ func main() {
 		Use:   "version",
 		Short: "print a version that is not real",
 		Run:   func(*cobra.Command, []string) { fmt.Println("rainhelp (example)") },
+	})
+
+	// Color the help the way the other commands here do. This has to happen
+	// before cobrarain, which captures whatever help function is installed at
+	// the time and draws the rain behind its output — wire it the other way
+	// round and the rain would be behind the uncolored help.
+	cc.Init(&cc.Config{
+		RootCmd:         root,
+		Headings:        cc.HiBlue + cc.Bold,
+		Commands:        cc.HiBlue + cc.Bold,
+		CmdShortDescr:   cc.HiBlue,
+		Example:         cc.HiBlue + cc.Italic,
+		ExecName:        cc.HiBlue + cc.Bold,
+		Flags:           cc.HiBlue + cc.Bold,
+		FlagsDescr:      cc.HiBlue,
+		NoExtraNewlines: true,
+		NoBottomNewline: true,
 	})
 
 	// This is the whole of it. Everything above is a CLI to hang it on.
