@@ -138,3 +138,35 @@ MIT.
 ## Licence
 
 MIT — see [LICENSE](LICENSE).
+
+## Dependency Graph
+
+Made with [goda](https://github.com/loov/goda):
+
+```
+# GOOS=js: the import edges of a wasm program live in js/wasm-tagged
+# files and are invisible to a host-context run
+GOOS=js GOARCH=wasm go run github.com/loov/goda@latest graph github.com/0magnet/termanim/... | dot -Tsvg -o docs/termanim-goda-graph.svg
+```
+
+![Dependency Graph](docs/termanim-goda-graph.svg "github.com/0magnet/termanim Dependency Graph")
+
+## Lines of Code
+
+Made with [gocloc](https://github.com/hhatto/gocloc) (excludes `vendor/`, `node_modules/`, `.git/`):
+
+```
+gocloc --not-match-d='(vendor|node_modules|\.git)' .
+```
+
+```
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Go                              66           1264           3347          10609
+Markdown                         1             31              0            109
+YAML                             1              0              7             98
+-------------------------------------------------------------------------------
+TOTAL                           68           1295           3354          10816
+-------------------------------------------------------------------------------
+```
