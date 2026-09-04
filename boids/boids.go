@@ -87,7 +87,7 @@ type Boids struct {
 	// length from the surface size. A single pixel shows where a boid is but
 	// not where it is going, and heading is the whole point of the effect.
 	Tail int
-	// Palette colours each boid by its heading.
+	// Palette colors each boid by its heading.
 	Palette canvas.Palette
 }
 
@@ -95,8 +95,8 @@ type Boids struct {
 // violet and back to red.
 //
 // Two things are required of it and neither is decorative. It has to close on
-// the colour it opened with, because heading is an angle, and a ramp that does
-// not close puts a hard colour seam across the flock at due west where the
+// the color it opened with, because heading is an angle, and a ramp that does
+// not close puts a hard color seam across the flock at due west where the
 // angle wraps. And it has to stay bright the whole way round: the ramps in
 // canvas are intensity ramps that run from black upward, and a boid flying in
 // whichever direction landed on the dark end of one would simply not be drawn.
@@ -150,7 +150,7 @@ func (b *Boids) Resize(w, h int) {
 	// second, so speed scales with the window rather than being fixed.
 	b.maxSpeed = math.Max(10.5, 0.42*small)
 	// The floor is what keeps the flock alive: without it, three rules that all
-	// point at a settled flock's centre cancel and the boids hang still.
+	// point at a settled flock's center cancel and the boids hang still.
 	b.minSpeed = 0.55 * b.maxSpeed
 	// Steering is an acceleration, and an acceleration divided by a speed is a
 	// turning rate: three radians a second, or about a hundred and seventy
@@ -406,8 +406,8 @@ func (b *Boids) draw(s *canvas.Surface) {
 		}
 		ux, uy := p.vx/sp, p.vy/sp
 
-		// Heading, from -pi..pi onto the whole ramp. Colouring by direction
-		// rather than by index means a flock that has aligned shares a colour,
+		// Heading, from -pi..pi onto the whole ramp. Coloring by direction
+		// rather than by index means a flock that has aligned shares a color,
 		// so the eye reads the sub-flocks without being told about them.
 		idx := int((math.Atan2(p.vy, p.vx)/(2*math.Pi) + 0.5) * 255)
 		if idx < 0 {

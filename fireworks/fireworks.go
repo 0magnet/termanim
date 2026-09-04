@@ -5,11 +5,11 @@
 // and at the top of its arc — where it has run out of climb — it bursts. The
 // burst replaces it with a hundred particles thrown outwards in every
 // direction at a random speed, each of which is then carried by the same
-// gravity: fast ones fly far and arc over, slow ones barely leave the centre,
+// gravity: fast ones fly far and arc over, slow ones barely leave the center,
 // and the sphere of the burst sags into the drooping shape a real one has.
 //
 // Three details do most of the work. Every particle of one burst shares a
-// colour, so a firework reads as a single object rather than confetti. Each
+// color, so a firework reads as a single object rather than confetti. Each
 // particle has a life that decays as it flies and dims it to nothing, so the
 // burst thins out instead of switching off. And the burst itself starts with a
 // white flash, because the eye expects the light before the sparks. The rising
@@ -28,9 +28,9 @@ import (
 	"github.com/0magnet/termanim/canvas"
 )
 
-// Colours are the shell colours, one per firework. They are saturated and
+// Colors are the shell colors, one per firework. They are saturated and
 // bright because everything drawn from them is a fade towards black: a muted
-// starting colour has no range to fade through and dies immediately.
+// starting color has no range to fade through and dies immediately.
 var Colours = []tcell.Color{
 	tcell.NewRGBColor(255, 80, 80),   // red
 	tcell.NewRGBColor(255, 190, 60),  // gold
@@ -171,7 +171,7 @@ func (f *Fireworks) explode(s shell) {
 		f.flashes = append(f.flashes, flash{
 			x: s.x, y: s.y, life: 1,
 			// The flash is small next to the burst it starts: it is the light
-			// at the centre, not the shape of the explosion.
+			// at the center, not the shape of the explosion.
 			radius: f.h * 0.08,
 			colour: s.colour,
 		})
@@ -191,7 +191,7 @@ func (f *Fireworks) explode(s shell) {
 			// sideways should drift with it.
 			vx: math.Cos(a)*v + s.vx*0.5,
 			vy: math.Sin(a)*v + s.vy*0.5,
-			// The colour of the shell, so one firework is one colour.
+			// The color of the shell, so one firework is one color.
 			colour: s.colour,
 			life:   1,
 			// Life lost per second: a spark lasts between one and a half and
@@ -298,9 +298,9 @@ func (f *Fireworks) Frame(s *canvas.Surface, dt float64) {
 	f.draw(s)
 }
 
-// fade dims a colour towards black by a factor from 0 to 1. Every particle is
-// drawn through this: fading the colour rather than swapping in a ramp keeps
-// each firework the one colour it was launched with.
+// fade dims a color towards black by a factor from 0 to 1. Every particle is
+// drawn through this: fading the color rather than swapping in a ramp keeps
+// each firework the one color it was launched with.
 func fade(c tcell.Color, v float64) tcell.Color {
 	if v <= 0 {
 		return tcell.ColorDefault
@@ -331,8 +331,8 @@ func (f *Fireworks) draw(s *canvas.Surface) {
 				if d > float64(r) {
 					continue
 				}
-				// White at the core shading out to the shell's colour at the
-				// rim: a flash is hot enough to wash its own colour out.
+				// White at the core shading out to the shell's color at the
+				// rim: a flash is hot enough to wash its own color out.
 				v := fl.life * (1 - d/float64(r+1))
 				c := fade(fl.colour, v)
 				if d < float64(r)/2 {

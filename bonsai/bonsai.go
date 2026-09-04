@@ -28,7 +28,7 @@ import (
 )
 
 // kind distinguishes the parts of the tree, which are drawn in different
-// characters and different colours.
+// characters and different colors.
 type kind int
 
 const (
@@ -185,7 +185,7 @@ func (b *Bonsai) trunkLife() int {
 	return n
 }
 
-// plant clears the canvas and starts a new trunk from the bottom centre.
+// plant clears the canvas and starts a new trunk from the bottom center.
 func (b *Bonsai) plant() {
 	for i := range b.buf {
 		b.buf[i] = glyphCell{}
@@ -198,7 +198,7 @@ func (b *Bonsai) plant() {
 		return
 	}
 	life := b.trunkLife()
-	// Centre the trunk, but not exactly: a tree grown on the middle column of
+	// Center the trunk, but not exactly: a tree grown on the middle column of
 	// the screen every single time looks placed rather than grown.
 	x := b.cols/2 + b.rng.Intn(5) - 2
 	b.live = append(b.live[:0], branch{

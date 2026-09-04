@@ -47,7 +47,7 @@ Fields and simulations, drawn on the pixel surface:
 | `rain` | drops with depth, slant, streaks and splashes |
 | `snow` | flakes that sway, settle and drift into banks |
 | `fireworks` | shells that rise, burst and droop into willows |
-| `life` | Conway's life, coloured by how long a cell has lived |
+| `life` | Conway's life, colored by how long a cell has lived |
 | `langton` | Langton's ants: chaos, then the highway |
 | `sand` | grains heaping at their angle of repose |
 | `maze` | a maze carved by backtracking, then solved |
@@ -118,7 +118,7 @@ the clear cell either side of each word is what keeps the text legible, and
 
 **Only the rain, for now.** `backdrop` is written against `matrix` rather than
 against animations in general: it reads cells as `matrix.Cell`, which carries
-an `Intensity` and a `Hot` flag modelling a trail, and the shading is built on
+an `Intensity` and a `Hot` flag modeling a trail, and the shading is built on
 those. The other effects here are half-block color surfaces with no such
 model, so pointing the backdrop at `snow` or `starfield` needs a neutral cell
 type and a surface-to-cell adapter first, not just a different constructor.
@@ -130,8 +130,8 @@ heavily dimmed.
 
 A terminal cell is about twice as tall as it is wide, so an animation drawn one
 pixel per cell looks squat and coarse. `canvas.Surface` draws every cell as an
-upper half block — `▀`, foreground colouring the top half, background the
-bottom — which gives two independently coloured pixels per cell, roughly
+upper half block — `▀`, foreground coloring the top half, background the
+bottom — which gives two independently colored pixels per cell, roughly
 square, at no cost. An animation sees a surface twice the height of the
 terminal and never thinks about it.
 

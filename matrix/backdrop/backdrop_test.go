@@ -58,7 +58,7 @@ func TestNotATerminalIsPassedThrough(t *testing.T) {
 	}
 }
 
-// Text that already has colour keeps it, and its escapes are not counted as
+// Text that already has color keeps it, and its escapes are not counted as
 // columns. This is the coloredcobra case.
 func TestStyledTextKeepsItsColours(t *testing.T) {
 	const styled = "\x1b[1;33mUsage:\x1b[0m\n  thing [flags]\n"
@@ -67,7 +67,7 @@ func TestStyledTextKeepsItsColours(t *testing.T) {
 	if !strings.Contains(out, "\x1b[1;33mUsage:") {
 		t.Error("the input's own escape did not survive next to its word")
 	}
-	// An escape is worth no columns, so colouring a word cannot move
+	// An escape is worth no columns, so coloring a word cannot move
 	// anything: the same text with and without its escapes must come out as
 	// the same frame. Counted as width, "\x1b[1;33m" would push everything on
 	// that row seven columns over and take seven cells of rain with it.
@@ -111,9 +111,9 @@ func TestSeedDecidesTheFrame(t *testing.T) {
 	}
 }
 
-// A space inside a coloured run must not end the colour. A styler colours
+// A space inside a colored run must not end the color. A styler colors
 // "-h, --help" once, at the dash; resetting at the space left everything
-// after it uncoloured, which is worse than not colouring at all.
+// after it uncoloured, which is worse than not coloring at all.
 func TestSpaceDoesNotBreakAColouredRun(t *testing.T) {
 	const in = "  \x1b[36m-h, --help\x1b[0m   help for it\n"
 	out := Render(in, Options{Force: true, Seed: 2, Width: 60})

@@ -68,7 +68,7 @@ func order(b *Boids) float64 {
 
 // crowding is the average number of neighbours each boid has inside the
 // perception radius. It rises as the boids gather, and is not fooled by a flock
-// that has split into several groups the way a distance to a global centre is.
+// that has split into several groups the way a distance to a global center is.
 func crowding(b *Boids) float64 {
 	r2 := b.radius * b.radius
 	var n int

@@ -53,7 +53,7 @@ var step = [4][2]int{
 func back(d int) int { return (d + 2) % 4 }
 
 // A cell is in exactly one of these states, and they are ordered: where two
-// cells meet, the passage between them is drawn in the colour of the lesser of
+// cells meet, the passage between them is drawn in the color of the lesser of
 // the two, so the solved route lights up its own corridors and nothing else.
 const (
 	unvisited uint8 = iota
@@ -75,7 +75,7 @@ const (
 // Maze is the animation. The zero value is not usable; call New.
 type Maze struct {
 	cw, ch int // the maze in cells
-	ox, oy int // pixel offset that centres the grid in the surface
+	ox, oy int // pixel offset that centers the grid in the surface
 
 	open  []uint8 // which walls are down, one bit per direction
 	state []uint8
@@ -112,7 +112,7 @@ type Maze struct {
 	// HoldSeconds is how long the solved maze is left up before the next one.
 	HoldSeconds float64
 
-	// Wall is the colour of everything not carved out yet — both the walls and
+	// Wall is the color of everything not carved out yet — both the walls and
 	// the ground the digger has not reached.
 	Wall tcell.Color
 	// Corridor is carved but unexplored floor. Dim: it is the backdrop the
@@ -146,7 +146,7 @@ func New(seed int64) *Maze {
 
 // Resize sizes the grid to the surface and starts a new maze.
 func (m *Maze) Resize(w, h int) {
-	// Whole cells only, and the grid is centred: a maze with a ragged strip of
+	// Whole cells only, and the grid is centered: a maze with a ragged strip of
 	// nothing down one side looks like a drawing bug rather than a margin.
 	m.cw = (w - 1) / pitch
 	m.ch = (h - 1) / pitch
@@ -380,7 +380,7 @@ func (m *Maze) Frame(s *canvas.Surface, dt float64) {
 	m.draw(s)
 }
 
-// colourFor is the colour a cell in this state is drawn in.
+// colourFor is the color a cell in this state is drawn in.
 func (m *Maze) colourFor(st uint8) tcell.Color {
 	switch st {
 	case carved:

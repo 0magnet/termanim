@@ -67,7 +67,7 @@ type Starfield struct {
 	// cruise; much above 4 the near stars jump so far between frames that
 	// they read as dashes rather than motion.
 	Speed float64
-	// Palette colours a star by how near it is, dim at the far plane and
+	// Palette colors a star by how near it is, dim at the far plane and
 	// white as it passes. Its low entries should be dark but not black: a
 	// star drawn in black would be a hole in the sky rather than a faint star.
 	Palette canvas.Palette

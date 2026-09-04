@@ -66,7 +66,7 @@ func TestPatternMovesBetweenFrames(t *testing.T) {
 	}
 }
 
-// The vanishing point is the whole illusion: if it drifts off centre the tube
+// The vanishing point is the whole illusion: if it drifts off center the tube
 // stops being a tube and becomes a smear. Measured with the checker turned
 // off, so what is left is purely the radial falloff.
 func TestVanishingPointIsCentred(t *testing.T) {
@@ -98,7 +98,7 @@ func TestVanishingPointIsCentred(t *testing.T) {
 	}
 }
 
-// Light falls off down the tube. Along any ray from the centre the wall must
+// Light falls off down the tube. Along any ray from the center the wall must
 // get steadily brighter, which is what makes the flat screen read as depth.
 func TestBrightnessGrowsWithRadius(t *testing.T) {
 	tn := New(0)

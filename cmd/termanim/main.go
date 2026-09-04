@@ -40,7 +40,7 @@ import (
 	"github.com/0magnet/termanim/tunnel"
 )
 
-// anim is one entry in the catalogue. Every package exposes the same Run, so
+// anim is one entry in the catalog. Every package exposes the same Run, so
 // adding an animation is a line here and an import above.
 type anim struct {
 	run  func(tcell.Screen, int64) error

@@ -51,7 +51,7 @@ type Fire struct {
 	decay []int
 
 	// Palette can be replaced before the first frame to burn a different
-	// colour. Green fire is a perfectly good screensaver.
+	// color. Green fire is a perfectly good screensaver.
 	Palette canvas.Palette
 }
 

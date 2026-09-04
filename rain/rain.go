@@ -27,7 +27,7 @@ import (
 
 // Water is the default ramp: a nearly black blue for the far drops through a
 // mid blue to a cold near-white at the head of the nearest ones. Rain has no
-// colour of its own, it takes the light, so the ramp is a brightness ramp with
+// color of its own, it takes the light, so the ramp is a brightness ramp with
 // a blue cast rather than a hue sweep.
 var Water = canvas.NewPalette(
 	canvas.Stop{At: 0.00, R: 0, G: 4, B: 12},
@@ -58,7 +58,7 @@ const (
 type drop struct {
 	x, y   float64 // position of the head, in pixels
 	vy     float64 // fall speed in pixels per second
-	slant  float64 // horizontal pixels travelled per vertical pixel
+	slant  float64 // horizontal pixels traveled per vertical pixel
 	length float64 // streak length in pixels: how far it moves in one exposure
 	depth  float64 // 0 is far away, 1 is right in front of you
 }
@@ -89,7 +89,7 @@ type Rain struct {
 	// SplashLife is how long a splash lasts, in seconds. Long enough to see,
 	// short enough that the floor is not a permanent bright line.
 	SplashLife float64
-	// Palette colours the drops by depth, dim at 0 and bright at 255.
+	// Palette colors the drops by depth, dim at 0 and bright at 255.
 	Palette canvas.Palette
 }
 

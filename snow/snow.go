@@ -36,7 +36,7 @@ var Snowfall = canvas.NewPalette(
 )
 
 type flake struct {
-	x, y  float64 // x is the centre it sways about, not where it is drawn
+	x, y  float64 // x is the center it sways about, not where it is drawn
 	vy    float64 // fall speed in pixels per second
 	phase float64 // where in its sway it currently is
 	swayW float64 // how far it swings either side of x, in pixels
@@ -44,7 +44,7 @@ type flake struct {
 	depth float64 // 0 is far away, 1 is right in front of you
 }
 
-// at returns where a flake is drawn: its centre plus the current sway.
+// at returns where a flake is drawn: its center plus the current sway.
 func (f flake) at() float64 { return f.x + f.swayW*math.Sin(f.phase) }
 
 // Snow is the animation. The zero value is not usable; call New.
@@ -81,7 +81,7 @@ type Snow struct {
 	// window; a few passes a second rounds the drifts off just as fast to the
 	// eye.
 	SettleRate float64
-	// Palette colours the flakes and the bank by depth.
+	// Palette colors the flakes and the bank by depth.
 	Palette canvas.Palette
 }
 

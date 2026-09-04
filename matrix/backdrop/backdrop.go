@@ -27,10 +27,10 @@
 // template keeps every one of cobra's own layout rules, so the help still says
 // what it said.
 //
-// Text that is already coloured — coloredcobra, lipgloss, anything that has
-// been through a styler — keeps its own colours: the escapes in it are carried
+// Text that is already colored — coloredcobra, lipgloss, anything that has
+// been through a styler — keeps its own colors: the escapes in it are carried
 // through to the output and are not counted as printable width. That matters
-// more than it sounds. A program that colours its help is exactly the sort of
+// more than it sounds. A program that colors its help is exactly the sort of
 // program that would want rain behind it, and measuring an escape sequence as
 // twenty columns of text puts the whole layout out.
 package backdrop
@@ -81,7 +81,7 @@ type Options struct {
 	// TextColor is what the text is drawn in. The zero value, ColorDefault,
 	// means a bright green-white that reads against the rain.
 	//
-	// It is ignored for text that brought its own colours. There is no sense
+	// It is ignored for text that brought its own colors. There is no sense
 	// in overriding a styler and then being asked where the styling went.
 	TextColor tcell.Color
 
@@ -89,7 +89,7 @@ type Options struct {
 	//
 	// By default a pipe or a redirect gets the text back with no rain and
 	// nothing added, because `--help | less` and a --help pasted into a bug
-	// report both want plain text and neither wants two hundred colour
+	// report both want plain text and neither wants two hundred color
 	// changes a line. NO_COLOR and TERM=dumb are honoured the same way.
 	Force bool
 
@@ -323,8 +323,8 @@ func paint(m *matrix.Matrix, s sheet, _ Options) string {
 				if !printable(line, i) {
 					// A blank inside the text keeps whatever style is in
 					// effect rather than resetting to default. Resetting
-					// breaks a coloured run at its first space: the styler
-					// coloured "-h, --help" once, at the dash, and everything
+					// breaks a colored run at its first space: the styler
+					// colored "-h, --help" once, at the dash, and everything
 					// after the space would come out uncoloured.
 					//
 					// And a blank CARRIES any escapes attached to it: stylers
@@ -352,7 +352,7 @@ func paint(m *matrix.Matrix, s sheet, _ Options) string {
 					b.WriteString(g.pre)
 					prev = unknown
 				case prev != "" && prev != unknown:
-					// First glyph of a span with a rain colour still in
+					// First glyph of a span with a rain color still in
 					// effect. Without this the words come out green.
 					b.WriteString(reset)
 					prev = ""

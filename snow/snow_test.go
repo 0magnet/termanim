@@ -25,7 +25,7 @@ func total(g []int) int {
 func TestFlakesDriftRatherThanFall(t *testing.T) {
 	// Rain crosses the surface in well under a second: its slowest drop falls
 	// six tenths of the height a second. Snow has to be far slower than that or
-	// it is only rain with a different colour.
+	// it is only rain with a different color.
 	const rainSlowest = 0.6
 	s := New(1)
 	s.Resize(tw, th)

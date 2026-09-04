@@ -34,7 +34,7 @@ func TestSurfaceIgnoresOutOfBounds(t *testing.T) {
 }
 
 // The whole point of the surface is that one cell carries two independently
-// coloured pixels. If that stops being true the animations lose half their
+// colored pixels. If that stops being true the animations lose half their
 // vertical resolution silently.
 func TestFlushPacksTwoPixelsPerCell(t *testing.T) {
 	screen := simscreen.NewScreen()
@@ -67,7 +67,7 @@ func TestFlushPacksTwoPixelsPerCell(t *testing.T) {
 }
 
 // A cell with only one pixel lit must leave the other half as the terminal's
-// background, not as a colour.
+// background, not as a color.
 //
 // Drawing it as an upper block with a default foreground does not do that: a
 // default foreground is whatever the terminal writes text in, so the empty half
@@ -156,7 +156,7 @@ func TestPaletteInterpolates(t *testing.T) {
 	}
 }
 
-// A plasma ramp that does not return to its starting colour shows a seam
+// A plasma ramp that does not return to its starting color shows a seam
 // wherever the summed field wraps.
 func TestPlasmaPaletteLoops(t *testing.T) {
 	r0, g0, b0 := Plasma[0].RGB()

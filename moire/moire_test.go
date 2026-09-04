@@ -71,7 +71,7 @@ func TestPatternSweeps(t *testing.T) {
 	t.Error("the pattern is identical after half a second: it is not moving")
 }
 
-// The same wall-clock interval must move the centres the same amount however
+// The same wall-clock interval must move the centers the same amount however
 // it is divided into frames.
 func TestFrameRateIndependent(t *testing.T) {
 	slow, fast := New(), New()
