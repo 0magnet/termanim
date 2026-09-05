@@ -33,7 +33,7 @@ func TestColumnsFall(t *testing.T) {
 	m.Resize(tw, th)
 
 	// Find a column that is running, then check its head descends.
-	var x int = -1
+	x := -1
 	for i := range m.col {
 		if m.col[i].active {
 			x = i
@@ -127,7 +127,9 @@ func TestAllGlyphsAreSingleWidth(t *testing.T) {
 func TestDeterministicForAGivenSeed(t *testing.T) {
 	run := func() []column {
 		s := simscreen.NewScreen()
-		_ = s.Init()
+		if err := s.Init(); err != nil {
+			t.Fatalf("init screen: %v", err)
+		}
 		defer s.Fini()
 		s.SetSize(tw, th)
 		m := New(7)
@@ -153,7 +155,9 @@ func TestDeterministicForAGivenSeed(t *testing.T) {
 func TestFrameRateIndependent(t *testing.T) {
 	run := func(frames int, step float64) []column {
 		s := simscreen.NewScreen()
-		_ = s.Init()
+		if err := s.Init(); err != nil {
+			t.Fatalf("init screen: %v", err)
+		}
 		defer s.Fini()
 		s.SetSize(tw, th)
 		m := New(5)
@@ -395,7 +399,7 @@ func TestBlendOffDrawsAtFullBrightness(t *testing.T) {
 			for x := 0; x < tw; x++ {
 				fg := cells[y*w+x].Style.GetForeground()
 				r, g, bl := fg.RGB()
-				b.WriteString(string(rune('0' + (r+g+bl)%10)))
+				b.WriteString(string(rune('0' + (r+g+bl)%10))) //nolint:unconvert
 			}
 		}
 		return b.String()

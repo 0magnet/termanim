@@ -26,7 +26,7 @@ func newScreen(t *testing.T) tcell.Screen {
 }
 
 // grow runs frames until the tree is finished, or fails if it never is.
-func grow(t *testing.T, b *Bonsai, s tcell.Screen) int {
+func grow(t *testing.T, b *Bonsai, s tcell.Screen) int { //nolint:unparam
 	t.Helper()
 	for i := 0; i < 5000; i++ {
 		if b.Done() {

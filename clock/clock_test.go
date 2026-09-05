@@ -16,7 +16,7 @@ const tw, th = 60, 24
 //
 // A clock is a pure function of the time, which makes it the most testable
 // thing in this repository: fix the time and the picture is fixed too.
-func at(t *testing.T, when time.Time) (tcell.Screen, *Clock) {
+func at(t *testing.T, when time.Time) (tcell.Screen, *Clock) { //nolint:unparam
 	t.Helper()
 	s := simscreen.NewScreen()
 	if err := s.Init(); err != nil {

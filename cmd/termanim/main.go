@@ -88,11 +88,11 @@ func names() []string {
 }
 
 func usage(w *os.File) {
-	fmt.Fprintf(w, "usage: termanim <animation>\n\n")
+	fmt.Fprintf(w, "usage: termanim <animation>\n\n") //nolint:errcheck,gosec
 	for _, n := range names() {
-		fmt.Fprintf(w, "  %-10s %s\n", n, anims[n].desc)
+		fmt.Fprintf(w, "  %-10s %s\n", n, anims[n].desc) //nolint:errcheck,gosec
 	}
-	fmt.Fprintf(w, "\nPress q, Escape or Ctrl-C to stop.\n")
+	fmt.Fprintf(w, "\nPress q, Escape or Ctrl-C to stop.\n") //nolint:errcheck,gosec
 }
 
 func main() {

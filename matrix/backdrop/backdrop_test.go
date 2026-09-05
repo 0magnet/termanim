@@ -101,7 +101,8 @@ func TestNoRainInsideALine(t *testing.T) {
 // a test possible at all.
 func TestSeedDecidesTheFrame(t *testing.T) {
 	o := Options{Force: true, Seed: 11, Width: 60}
-	if Render(help, o) != Render(help, o) {
+	first, second := Render(help, o), Render(help, o)
+	if first != second {
 		t.Error("the same seed gave two different frames")
 	}
 	o2 := o

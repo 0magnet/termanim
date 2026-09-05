@@ -226,7 +226,9 @@ func TestTallFishAreNotPickedForShortTanks(t *testing.T) {
 func TestFrameRateIndependent(t *testing.T) {
 	run := func(frames int, step float64) []fish {
 		s := simscreen.NewScreen()
-		_ = s.Init()
+		if err := s.Init(); err != nil {
+			t.Fatalf("init screen: %v", err)
+		}
 		defer s.Fini()
 		s.SetSize(tw, th)
 		a := New(6)
