@@ -1,15 +1,13 @@
-# github.com/0magnet/coloredcobra v1.0.3
+# github.com/0magnet/calvin v0.0.0-20260907211102-35b15c690884
 ## explicit; go 1.25.0
-github.com/0magnet/coloredcobra
+github.com/0magnet/calvin
+github.com/0magnet/calvin/clihelp
 # github.com/clipperhouse/displaywidth v0.11.0
 ## explicit; go 1.18
 github.com/clipperhouse/displaywidth
 # github.com/clipperhouse/uax29/v2 v2.7.0
 ## explicit; go 1.18
 github.com/clipperhouse/uax29/v2/graphemes
-# github.com/fatih/color v1.19.0
-## explicit; go 1.25.0
-github.com/fatih/color
 # github.com/gdamore/encoding v1.0.1
 ## explicit; go 1.9
 github.com/gdamore/encoding
@@ -26,9 +24,6 @@ github.com/inconshreveable/mousetrap
 # github.com/lucasb-eyer/go-colorful v1.4.1
 ## explicit; go 1.12
 github.com/lucasb-eyer/go-colorful
-# github.com/mattn/go-colorable v0.1.15
-## explicit; go 1.18
-github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.24
 ## explicit; go 1.20
 github.com/mattn/go-isatty

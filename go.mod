@@ -3,7 +3,7 @@ module github.com/0magnet/termanim
 go 1.25.0
 
 require (
-	github.com/0magnet/coloredcobra v1.0.3
+	github.com/0magnet/calvin v0.0.0-20260907211102-35b15c690884
 	github.com/spf13/cobra v1.10.2
 	golang.org/x/term v0.45.0
 )
@@ -11,8 +11,6 @@ require (
 require (
 	github.com/clipperhouse/displaywidth v0.11.0 // indirect
 	github.com/clipperhouse/uax29/v2 v2.7.0 // indirect
-	github.com/fatih/color v1.19.0 // indirect
-	github.com/mattn/go-colorable v0.1.15 // indirect
 	github.com/mattn/go-isatty v0.0.24 // indirect
 )
 
