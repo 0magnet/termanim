@@ -7,16 +7,16 @@ browser through [tuiwasm](https://github.com/0magnet/tuiwasm) or inside any
 program that already owns a `tcell.Screen`.
 
 **Live demo** — every animation here runs in a browser tab as part of
-[tuiwasm](https://0magnet.github.io/tuiwasm/), which registers them from this
+[tuiwasm](https://tuiwasm.magnetosphere.net/), which registers them from this
 package. Each has a page of its own:
-[matrix](https://0magnet.github.io/tuiwasm/?demo=matrix) ·
-[donut](https://0magnet.github.io/tuiwasm/?demo=donut) ·
-[fireworks](https://0magnet.github.io/tuiwasm/?demo=fireworks) ·
-[aquarium](https://0magnet.github.io/tuiwasm/?demo=aquarium) ·
-[boids](https://0magnet.github.io/tuiwasm/?demo=boids) ·
-[plasma](https://0magnet.github.io/tuiwasm/?demo=plasma) ·
-[starfield](https://0magnet.github.io/tuiwasm/?demo=starfield) ·
-[life](https://0magnet.github.io/tuiwasm/?demo=life) — and the rest from the
+[matrix](https://tuiwasm.magnetosphere.net/?demo=matrix) ·
+[donut](https://tuiwasm.magnetosphere.net/?demo=donut) ·
+[fireworks](https://tuiwasm.magnetosphere.net/?demo=fireworks) ·
+[aquarium](https://tuiwasm.magnetosphere.net/?demo=aquarium) ·
+[boids](https://tuiwasm.magnetosphere.net/?demo=boids) ·
+[plasma](https://tuiwasm.magnetosphere.net/?demo=plasma) ·
+[starfield](https://tuiwasm.magnetosphere.net/?demo=starfield) ·
+[life](https://tuiwasm.magnetosphere.net/?demo=life) — and the rest from the
 launcher there.
 
 ```sh
