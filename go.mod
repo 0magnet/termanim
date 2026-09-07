@@ -3,7 +3,7 @@ module github.com/0magnet/termanim
 go 1.25.0
 
 require (
-	github.com/0magnet/coloredcobra v1.0.2
+	github.com/0magnet/coloredcobra v1.0.3
 	github.com/spf13/cobra v1.10.2
 	golang.org/x/term v0.45.0
 )
