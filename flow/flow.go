@@ -348,7 +348,7 @@ func fade(t float64) float64 { return t * t * t * (t*(t*6-15) + 10) }
 // constants are the usual odd multipliers chosen so that every input bit
 // reaches the top of the word.
 func (f *Flow) lattice(x, y, z int32) float64 {
-	h := uint32(x)*0x9E3779B1 ^ uint32(y)*0x85EBCA77 ^ uint32(z)*0xC2B2AE3D ^ f.seed
+	h := uint32(x)*0x9E3779B1 ^ uint32(y)*0x85EBCA77 ^ uint32(z)*0xC2B2AE3D ^ f.seed //nolint:gosec // a hash: the wraparound is the mixing, not an overflow
 	h ^= h >> 15
 	h *= 0x2C1B3C6D
 	h ^= h >> 13

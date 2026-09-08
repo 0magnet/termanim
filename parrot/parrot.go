@@ -60,7 +60,7 @@ type Parrot struct {
 
 	// Spread is how far apart in phase neighboring parrots are, as a fraction
 	// of a full roll. 0 makes the row move as one bird; the default staggers
-	// them into a travelling wave.
+	// them into a traveling wave.
 	Spread float64
 
 	// Saturation and Value are the HSV constants the cycling hue is combined

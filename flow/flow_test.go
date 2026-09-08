@@ -319,8 +319,8 @@ func travel(speed float64, frames int, step float64) (dist, x, y float64) {
 // three seconds covers about the same ground: a motion that followed the frame
 // count instead of the clock would cover twice as much.
 func TestSameElapsedTimeCarriesTheSameDistance(t *testing.T) {
-	slow, sx, sy := travel(4, 90, 1.0/30)  // three seconds
-	fast, fx, fy := travel(4, 180, 1.0/60) // the same three seconds
+	slow, sx, sy := travel(4, 90, 1.0/30) // three seconds
+	_, fx, fy := travel(4, 180, 1.0/60)   // the same three seconds; only where it ends is claimed here
 	if slow == 0 {
 		t.Fatal("the particle did not move at all")
 	}
@@ -333,7 +333,7 @@ func TestSameElapsedTimeCarriesTheSameDistance(t *testing.T) {
 		t.Fatalf("a particle at speed zero traveled %.3f pixels", slow)
 	}
 	slow, _, _ = travel(34, 90, 1.0/30)
-	fast, _, _ = travel(34, 180, 1.0/60)
+	fast, _, _ := travel(34, 180, 1.0/60)
 	if ratio := fast / slow; ratio < 0.75 || ratio > 1.25 {
 		t.Errorf("three seconds covers %.2f pixels at 30fps and %.2f at 60fps", slow, fast)
 	}

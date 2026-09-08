@@ -39,14 +39,14 @@ import "github.com/gdamore/tcell/v3"
 var brailleStr = func() [256]string {
 	var t [256]string
 	for i := range t {
-		t[i] = string(rune(BrailleBase + i))
+		t[i] = string(BrailleBase + rune(i))
 	}
 	return t
 }()
 
 // BrailleBase is U+2800, the empty Braille pattern. Adding a dot mask to it
 // gives the glyph for that mask; see BrailleRune.
-const BrailleBase = 0x2800
+const BrailleBase rune = 0x2800
 
 // dotBit maps a subpixel within a cell to its bit in the dot mask, indexed by
 // row*2+col with col in 0..1 and row in 0..3.
@@ -73,7 +73,7 @@ var dotBit = [8]byte{
 // BrailleRune returns the glyph for a dot mask, for a consumer that has to
 // composite a Braille cell somewhere other than a screen. The bit layout is the
 // one described on dotBit.
-func BrailleRune(mask byte) rune { return rune(BrailleBase + int(mask)) }
+func BrailleRune(mask byte) rune { return BrailleBase + rune(mask) }
 
 // BrailleSurface is a grid of 1-bit subpixels, w wide and h tall, where w is
 // twice the terminal's column count and h is four times its row count. Color is
