@@ -71,7 +71,7 @@ Fields and simulations, drawn on the pixel surface:
 | `parrot` | the party parrot, rolling once around the hue wheel |
 | `bounce` | the screensaver logo, and the wait for it to hit a corner |
 | `clock` | an analog clock, after aclock |
-| `logo` | magnetosphere.net's op-art funnel, its rings and field counter-scrolling |
+| `magnetosphere` | the logo from magnetosphere.net, its rings and field counter-scrolling |
 
 Made of characters, painting glyphs directly:
 

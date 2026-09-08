@@ -1,4 +1,4 @@
-package logo
+package magnetosphere
 
 import (
 	"math"
@@ -14,14 +14,14 @@ const tw, th = 120, 68
 // dt is the step the assertions below are calibrated to.
 const dt = 1.0 / 30
 
-func render(frames int) (*Logo, *canvas.Surface) {
-	l := New(1)
-	l.Resize(tw, th)
+func render(frames int) (*Magnetosphere, *canvas.Surface) {
+	m := New(1)
+	m.Resize(tw, th)
 	s := canvas.NewSurface(tw, th)
 	for i := 0; i < frames; i++ {
-		l.Frame(s, dt)
+		m.Frame(s, dt)
 	}
-	return l, s
+	return m, s
 }
 
 // lum is the pixel's brightness, 0 to 1.
@@ -60,15 +60,15 @@ func TestDrawsBothColors(t *testing.T) {
 // u² = (v*Slope)² + Waist². If the two ever disagree the picture grows an edge
 // where nothing is.
 func TestSilhouetteIsTheHyperbola(t *testing.T) {
-	l, _ := render(1)
+	m, _ := render(1)
 	for i := 0; i <= 40; i++ {
 		v := -1 + 2*float64(i)/40
-		want := math.Hypot(v*l.Slope, l.Waist)
+		want := math.Hypot(v*m.Slope, m.Waist)
 		// Just inside and just outside the predicted edge.
-		if l.disc(want*0.98, v) < 0 {
+		if m.disc(want*0.98, v) < 0 {
 			t.Errorf("v=%.2f: no funnel just inside the predicted edge %.4f", v, want)
 		}
-		if l.disc(want*1.02, v) >= 0 {
+		if m.disc(want*1.02, v) >= 0 {
 			t.Errorf("v=%.2f: funnel just outside the predicted edge %.4f", v, want)
 		}
 	}
@@ -76,12 +76,12 @@ func TestSilhouetteIsTheHyperbola(t *testing.T) {
 
 // TestWaistIsNarrowest is what makes it an hourglass rather than a cone.
 func TestWaistIsNarrowest(t *testing.T) {
-	l, _ := render(1)
+	m, _ := render(1)
 	edge := func(v float64) float64 {
 		// Walk out until the ray stops hitting.
 		x := 0.0
 		for ; x < 8; x += 0.001 {
-			if l.disc(x, v) < 0 {
+			if m.disc(x, v) < 0 {
 				break
 			}
 		}
@@ -137,8 +137,8 @@ func bestShift(a, b []float64) int {
 // not from the phase variables, because the sign of a phase is an
 // implementation detail and the direction on screen is not.
 func TestCounterScroll(t *testing.T) {
-	l := New(1)
-	l.Resize(tw, th)
+	m := New(1)
+	m.Resize(tw, th)
 	s := canvas.NewSurface(tw, th)
 
 	column := func(x int) []float64 {
@@ -149,7 +149,7 @@ func TestCounterScroll(t *testing.T) {
 		return out
 	}
 
-	l.Frame(s, dt)
+	m.Frame(s, dt)
 	// Just off the middle: the waist row itself is the one place the funnel
 	// does not move, being where every band coordinate passes through zero.
 	funnelBefore := column(tw / 2)
@@ -158,7 +158,7 @@ func TestCounterScroll(t *testing.T) {
 	// Half a second, which at the default rates is a third of a band — far
 	// enough to see and not so far that the match could have wrapped.
 	for i := 0; i < 15; i++ {
-		l.Frame(s, dt)
+		m.Frame(s, dt)
 	}
 	funnelShift := bestShift(funnelBefore, column(tw/2))
 	fieldShift := bestShift(fieldBefore, column(1))
@@ -179,11 +179,11 @@ func TestCounterScroll(t *testing.T) {
 // pitch means a small window shows fewer bands, each still legible.
 func TestPitchHeldAcrossSizes(t *testing.T) {
 	for _, h := range []int{48, 68, 140, 300} {
-		l := New(1)
+		m := New(1)
 		w := h * 2
-		l.Resize(w, h)
+		m.Resize(w, h)
 		s := canvas.NewSurface(w, h)
-		l.Frame(s, dt)
+		m.Frame(s, dt)
 
 		// Count light-to-dark crossings down the outermost column, where the
 		// field's stripes are straight and FieldPitch is meant to hold.
@@ -199,9 +199,9 @@ func TestPitchHeldAcrossSizes(t *testing.T) {
 		}
 		// Two edges to a band.
 		got := float64(h) / (float64(edges) / 2)
-		if got < l.FieldPitch*0.6 || got > l.FieldPitch*1.7 {
+		if got < m.FieldPitch*0.6 || got > m.FieldPitch*1.7 {
 			t.Errorf("h=%d: band pitch %.1f px, want near FieldPitch %.1f",
-				h, got, l.FieldPitch)
+				h, got, m.FieldPitch)
 		}
 	}
 }
@@ -210,11 +210,11 @@ func TestPitchHeldAcrossSizes(t *testing.T) {
 // pane is being laid out.
 func TestDegenerateSizes(t *testing.T) {
 	for _, sz := range [][2]int{{0, 0}, {1, 1}, {0, 20}, {20, 0}, {3, 2}} {
-		l := New(1)
-		l.Resize(sz[0], sz[1])
+		m := New(1)
+		m.Resize(sz[0], sz[1])
 		s := canvas.NewSurface(max(sz[0], 1), max(sz[1], 1))
 		for i := 0; i < 5; i++ {
-			l.Frame(s, dt)
+			m.Frame(s, dt)
 		}
 	}
 }

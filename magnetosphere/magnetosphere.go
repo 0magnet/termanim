@@ -1,5 +1,6 @@
-// Package logo animates magnetosphere.net's logo: a waisted funnel standing in
-// a field of stripes, the funnel scrolling one way and the field the other.
+// Package magnetosphere animates magnetosphere.net's logo: a waisted funnel
+// standing in a field of stripes, the funnel scrolling one way and the field
+// the other.
 //
 // The logo is a still image — op art of the kind where a page of horizontal
 // lines bends around something that is not there. Straight stripes at the left
@@ -73,7 +74,7 @@
 // sampling grid happens to hit — the picture crawls, and the crawl is not the
 // motion. Each pixel is therefore sampled four times and averaged, which turns
 // the too-fine bands into the grey they should be.
-package logo
+package magnetosphere
 
 import (
 	"math"
@@ -83,8 +84,8 @@ import (
 	"github.com/0magnet/termanim/canvas"
 )
 
-// Logo is the animation. The zero value is not usable; call New.
-type Logo struct {
+// Magnetosphere is the animation. The zero value is not usable; call New.
+type Magnetosphere struct {
 	w, h     int
 	cx, cy   float64
 	invHalfH float64
@@ -151,8 +152,8 @@ type Logo struct {
 // New returns the logo. There is nothing to randomize — the picture is a rule,
 // not a process — so the seed is accepted for the sake of the common signature
 // and ignored.
-func New(_ int64) *Logo {
-	return &Logo{
+func New(_ int64) *Magnetosphere {
+	return &Magnetosphere{
 		// Measured off the logo: the throat is a little over a fifth of the
 		// half-height across, and the funnel has opened past the side of the
 		// frame by three quarters of the way to the top.
@@ -181,22 +182,22 @@ func New(_ int64) *Logo {
 }
 
 // Resize records the window and works out the constants the ray test needs.
-func (l *Logo) Resize(w, h int) {
-	l.w, l.h = w, h
+func (m *Magnetosphere) Resize(w, h int) {
+	m.w, m.h = w, h
 	if w <= 0 || h <= 0 {
 		return
 	}
-	l.cx, l.cy = float64(w)/2, float64(h)/2
+	m.cx, m.cy = float64(w)/2, float64(h)/2
 	// Both axes are measured in half-heights, so the funnel keeps its
 	// proportions and a wider window simply shows more field either side of
 	// it — which is what widening the logo's frame would do.
-	l.invHalfH = 2 / float64(h)
+	m.invHalfH = 2 / float64(h)
 
 	// Waist is given on screen; the throat radius that projects to it from
 	// Depth away is a = Depth*Waist/sqrt(1+Waist²), which comes straight out
 	// of setting the silhouette condition equal to u² = Waist² at v = 0.
-	l.throat = l.Depth * l.Waist / math.Sqrt(1+l.Waist*l.Waist)
-	l.cTerm = l.Depth*l.Depth - l.throat*l.throat
+	m.throat = m.Depth * m.Waist / math.Sqrt(1+m.Waist*m.Waist)
+	m.cTerm = m.Depth*m.Depth - m.throat*m.throat
 
 	// Turn the two pitches into the band counts the stripe coordinates want.
 	//
@@ -204,44 +205,44 @@ func (l *Logo) Resize(w, h int) {
 	// field's lift is near enough one to ignore, so a field band is
 	// (h/2)/fldBands pixels tall.
 	halfPx := float64(h) / 2
-	l.fldBands = halfPx / math.Max(l.FieldPitch, 0.5)
+	m.fldBands = halfPx / math.Max(m.FieldPitch, 0.5)
 	// The funnel's coordinate is the height of the ray's hit, which at the
 	// waist advances k0 per unit of v — the near root with the ray straight
 	// ahead, where the discriminant is just the throat radius squared.
-	k0 := l.cTerm / (l.Depth + l.throat)
-	l.funBands = halfPx / (k0 * math.Max(l.FunnelPitch, 0.5))
+	k0 := m.cTerm / (m.Depth + m.throat)
+	m.funBands = halfPx / (k0 * math.Max(m.FunnelPitch, 0.5))
 
-	l.wide = l.BendWidth
-	if l.wide <= 0 {
+	m.wide = m.BendWidth
+	if m.wide <= 0 {
 		// Three waists out, which is about where the funnel has opened enough
 		// to be the thing the field bends around. Its width at the very top is
 		// not the scale to use: that is wider than the frame, and a bend
 		// measured against something wider than the frame lifts the whole
 		// field by the same amount — a page of straight lines again.
-		l.wide = l.Waist * 3
+		m.wide = m.Waist * 3
 	}
-	if l.wide <= 0 {
-		l.wide = 1e-6
+	if m.wide <= 0 {
+		m.wide = 1e-6
 	}
 }
 
 // Frame advances both phases and redraws.
-func (l *Logo) Frame(s *canvas.Surface, dt float64) {
-	if l.w == 0 || l.h == 0 {
+func (m *Magnetosphere) Frame(s *canvas.Surface, dt float64) {
+	if m.w == 0 || m.h == 0 {
 		return
 	}
 	// Negated: a band sits where its stripe coordinate is constant, so raising
 	// the phase lowers the band. Storing the phase the way it is added keeps
 	// the sign out of sample, and the surprise out of the exported fields.
-	l.funPhase = wrap1(l.funPhase - l.FunnelSpeed*dt)
-	l.fldPhase = wrap1(l.fldPhase + l.FieldSpeed*dt)
+	m.funPhase = wrap1(m.funPhase - m.FunnelSpeed*dt)
+	m.fldPhase = wrap1(m.fldPhase + m.FieldSpeed*dt)
 
 	w, h := s.Size()
-	if w > l.w {
-		w = l.w
+	if w > m.w {
+		w = m.w
 	}
-	if h > l.h {
-		h = l.h
+	if h > m.h {
+		h = m.h
 	}
 	for y := 0; y < h; y++ {
 		for x := 0; x < w; x++ {
@@ -252,9 +253,9 @@ func (l *Logo) Frame(s *canvas.Surface, dt float64) {
 			for _, o := range [4][2]float64{
 				{0.25, 0.25}, {0.75, 0.25}, {0.25, 0.75}, {0.75, 0.75},
 			} {
-				u := (float64(x) + o[0] - l.cx) * l.invHalfH
-				v := (l.cy - float64(y) - o[1]) * l.invHalfH
-				c := l.sample(u, v)
+				u := (float64(x) + o[0] - m.cx) * m.invHalfH
+				v := (m.cy - float64(y) - o[1]) * m.invHalfH
+				c := m.sample(u, v)
 				r += c[0]
 				g += c[1]
 				b += c[2]
@@ -268,19 +269,19 @@ func (l *Logo) Frame(s *canvas.Surface, dt float64) {
 // disc is the ray-surface discriminant at one screen point. Non-negative means
 // the ray meets the funnel, so its sign is the silhouette and its size says
 // how squarely the surface faces the camera there.
-func (l *Logo) disc(u, v float64) float64 {
-	vs := v * l.Slope
-	return l.Depth*l.Depth - (u*u+1-vs*vs)*l.cTerm
+func (m *Magnetosphere) disc(u, v float64) float64 {
+	vs := v * m.Slope
+	return m.Depth*m.Depth - (u*u+1-vs*vs)*m.cTerm
 }
 
 // sample returns the color at one point, in half-height units with v up.
-func (l *Logo) sample(u, v float64) [3]float64 {
-	if disc := l.disc(u, v); disc >= 0 {
+func (m *Magnetosphere) sample(u, v float64) [3]float64 {
+	if disc := m.disc(u, v); disc >= 0 {
 		// The ray meets the funnel. k is the near hit, written so that it
 		// stays accurate as a passes through zero — which it does, at the
 		// height where the ray runs parallel to the surface's asymptote.
-		k := l.cTerm / (l.Depth + math.Sqrt(disc))
-		s := k * v * l.funBands
+		k := m.cTerm / (m.Depth + math.Sqrt(disc))
+		s := k * v * m.funBands
 
 		// How much of a band one pixel sideways covers.
 		//
@@ -292,23 +293,23 @@ func (l *Logo) sample(u, v float64) [3]float64 {
 		// fade towards the average of the two colors, which is what that pixel
 		// would average to if it could be sampled properly.
 		width := 1.0
-		if d2 := l.disc(u+l.invHalfH, v); d2 >= 0 {
-			k2 := l.cTerm / (l.Depth + math.Sqrt(d2))
-			width = math.Abs(k2-k) * math.Abs(v) * l.funBands
+		if d2 := m.disc(u+m.invHalfH, v); d2 >= 0 {
+			k2 := m.cTerm / (m.Depth + math.Sqrt(d2))
+			width = math.Abs(k2-k) * math.Abs(v) * m.funBands
 		}
-		b := band(s+l.funPhase, l.Duty)
+		b := band(s+m.funPhase, m.Duty)
 		sharp := 1 - smoothstep((width-0.2)/0.4)
-		return mix(l.FunnelDark, l.FunnelLight, 0.5+(b-0.5)*sharp)
+		return mix(m.FunnelDark, m.FunnelLight, 0.5+(b-0.5)*sharp)
 	}
 	// The field, outside the silhouette.
 	//
 	// Cubes over a sum rather than a clamped ratio: a clamp leaves the lift
 	// flat everywhere inside the scale it clamps at, and the field there runs
 	// dead horizontal — a shelf beside the funnel that the logo does not have.
-	w3 := pow3(l.wide)
-	lift := 1 + l.Bend*w3/(pow3(math.Abs(u))+w3)
-	s := v / lift * l.fldBands
-	return mix(l.Dark, l.Light, band(s+l.fldPhase, l.Duty))
+	w3 := pow3(m.wide)
+	lift := 1 + m.Bend*w3/(pow3(math.Abs(u))+w3)
+	s := v / lift * m.fldBands
+	return mix(m.Dark, m.Light, band(s+m.fldPhase, m.Duty))
 }
 
 // pow3 is x cubed. The bend is concentrated near the funnel rather than spread

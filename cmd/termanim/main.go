@@ -34,7 +34,7 @@ import (
 	"github.com/0magnet/termanim/lavalamp"
 	"github.com/0magnet/termanim/life"
 	"github.com/0magnet/termanim/lightning"
-	"github.com/0magnet/termanim/logo"
+	"github.com/0magnet/termanim/magnetosphere"
 	"github.com/0magnet/termanim/matrix"
 	"github.com/0magnet/termanim/maze"
 	"github.com/0magnet/termanim/metaballs"
@@ -68,42 +68,42 @@ func noSeed(f func(tcell.Screen) error) func(tcell.Screen, int64) error {
 }
 
 var anims = map[string]anim{
-	"atom":      {atom.Run, "electrons on tilted orbits round a glowing nucleus"},
-	"aurora":    {aurora.Run, "curtains of light, folding and rippling"},
-	"bounce":    {bounce.Run, "the screensaver logo, and the wait for a corner"},
-	"flow":      {flow.Run, "particles carried through a curl-noise field"},
-	"frost":     {frost.Run, "a crystal growing by diffusion-limited aggregation"},
-	"julia":     {noSeed(julia.Run), "a Julia set morphing along the cardioid"},
-	"lightning": {lightning.Run, "a branching discharge, flash and afterglow"},
-	"parrot":    {parrot.Run, "the party parrot, rolling and cycling hue"},
-	"pendulum":  {pendulum.Run, "double pendulums shearing apart from one another"},
-	"physarum":  {physarum.Run, "slime mold building a transport network"},
-	"reaction":  {reaction.Run, "Gray-Scott reaction-diffusion, spots into labyrinth"},
-	"ripple":    {ripple.Run, "a ripple tank: rain, rings and interference"},
-	"wolfram":   {wolfram.Run, "elementary cellular automata scrolling upward"},
-	"aquarium":  {aquarium.Run, "fish swimming past swaying seaweed"},
-	"boids":     {boids.Run, "flocking by separation, alignment and cohesion"},
-	"bonsai":    {bonsai.Run, "a bonsai tree growing branch by branch"},
-	"clock":     {noSeed(clock.Run), "an analog clock, after aclock"},
-	"cube":      {cube.Run, "a rotating wireframe solid, shaded by depth"},
-	"donut":     {donut.Run, "a lit torus, z-buffered"},
-	"fire":      {fire.Run, "a heat grid seeded with noise and cooled upward"},
-	"fireworks": {fireworks.Run, "shells that rise, burst and droop"},
-	"langton":   {langton.Run, "Langton's ants, chaos then a highway"},
-	"lavalamp":  {lavalamp.Run, "wax rising and sinking in a lamp"},
-	"logo":      {logo.Run, "magnetosphere.net's op-art funnel, counter-scrolling"},
-	"life":      {life.Run, "Conway's life, colored by age"},
-	"matrix":    {matrix.Run, "falling columns of glyphs"},
-	"maze":      {maze.Run, "a maze carved, then solved"},
-	"metaballs": {metaballs.Run, "blobs that bulge and merge"},
-	"moire":     {noSeed(moire.Run), "two overlapping ripples interfering"},
-	"pipes":     {pipes.Run, "pipes growing and turning"},
-	"plasma":    {noSeed(plasma.Run), "the drifting colored field of the demoscene"},
-	"rain":      {rain.Run, "rain with depth, slant and splashes"},
-	"sand":      {sand.Run, "falling sand heaping at its angle of repose"},
-	"snow":      {snow.Run, "snow that drifts and settles into banks"},
-	"starfield": {starfield.Run, "stars streaming past the viewer"},
-	"tunnel":    {tunnel.Run, "flying down a textured tube"},
+	"atom":          {atom.Run, "electrons on tilted orbits round a glowing nucleus"},
+	"aurora":        {aurora.Run, "curtains of light, folding and rippling"},
+	"bounce":        {bounce.Run, "the screensaver logo, and the wait for a corner"},
+	"flow":          {flow.Run, "particles carried through a curl-noise field"},
+	"frost":         {frost.Run, "a crystal growing by diffusion-limited aggregation"},
+	"julia":         {noSeed(julia.Run), "a Julia set morphing along the cardioid"},
+	"lightning":     {lightning.Run, "a branching discharge, flash and afterglow"},
+	"parrot":        {parrot.Run, "the party parrot, rolling and cycling hue"},
+	"pendulum":      {pendulum.Run, "double pendulums shearing apart from one another"},
+	"physarum":      {physarum.Run, "slime mold building a transport network"},
+	"reaction":      {reaction.Run, "Gray-Scott reaction-diffusion, spots into labyrinth"},
+	"ripple":        {ripple.Run, "a ripple tank: rain, rings and interference"},
+	"wolfram":       {wolfram.Run, "elementary cellular automata scrolling upward"},
+	"aquarium":      {aquarium.Run, "fish swimming past swaying seaweed"},
+	"boids":         {boids.Run, "flocking by separation, alignment and cohesion"},
+	"bonsai":        {bonsai.Run, "a bonsai tree growing branch by branch"},
+	"clock":         {noSeed(clock.Run), "an analog clock, after aclock"},
+	"cube":          {cube.Run, "a rotating wireframe solid, shaded by depth"},
+	"donut":         {donut.Run, "a lit torus, z-buffered"},
+	"fire":          {fire.Run, "a heat grid seeded with noise and cooled upward"},
+	"fireworks":     {fireworks.Run, "shells that rise, burst and droop"},
+	"langton":       {langton.Run, "Langton's ants, chaos then a highway"},
+	"lavalamp":      {lavalamp.Run, "wax rising and sinking in a lamp"},
+	"life":          {life.Run, "Conway's life, colored by age"},
+	"magnetosphere": {magnetosphere.Run, "magnetosphere.net's op-art funnel, counter-scrolling"},
+	"matrix":        {matrix.Run, "falling columns of glyphs"},
+	"maze":          {maze.Run, "a maze carved, then solved"},
+	"metaballs":     {metaballs.Run, "blobs that bulge and merge"},
+	"moire":         {noSeed(moire.Run), "two overlapping ripples interfering"},
+	"pipes":         {pipes.Run, "pipes growing and turning"},
+	"plasma":        {noSeed(plasma.Run), "the drifting colored field of the demoscene"},
+	"rain":          {rain.Run, "rain with depth, slant and splashes"},
+	"sand":          {sand.Run, "falling sand heaping at its angle of repose"},
+	"snow":          {snow.Run, "snow that drifts and settles into banks"},
+	"starfield":     {starfield.Run, "stars streaming past the viewer"},
+	"tunnel":        {tunnel.Run, "flying down a textured tube"},
 }
 
 func names() []string {
@@ -117,8 +117,17 @@ func names() []string {
 
 func usage(w *os.File) {
 	fmt.Fprintf(w, "usage: termanim <animation>\n\n") //nolint:errcheck,gosec
+	// Measured rather than fixed: a name longer than the column pushes its own
+	// description out of line and leaves every other row indented to a margin
+	// nothing sits at any more.
+	pad := 0
 	for _, n := range names() {
-		fmt.Fprintf(w, "  %-10s %s\n", n, anims[n].desc) //nolint:errcheck,gosec
+		if len(n) > pad {
+			pad = len(n)
+		}
+	}
+	for _, n := range names() {
+		fmt.Fprintf(w, "  %-*s %s\n", pad, n, anims[n].desc) //nolint:errcheck,gosec
 	}
 	fmt.Fprintf(w, "\nPress q, Escape or Ctrl-C to stop.\n") //nolint:errcheck,gosec
 }
