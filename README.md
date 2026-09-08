@@ -19,6 +19,12 @@ package. Each has a page of its own:
 [life](https://tuiwasm.magnetosphere.net/?demo=life) — and the rest from the
 launcher there.
 
+![The thirty-four animations](docs/termanim-gallery.png "every animation in the package, one frame each, captured from the browser build")
+
+Each tile above is a real frame, screenshotted from the browser build rather
+than drawn for the README — so what a tile shows is what the animation does at
+some moment, including the ones that take a while to establish themselves.
+
 ```sh
 go install github.com/0magnet/termanim/cmd/termanim@latest
 
