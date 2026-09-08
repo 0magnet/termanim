@@ -110,6 +110,24 @@ into a bug report are both plain text. Wire it *after* anything else that
 styles the help — `coloredcobra`, say — since it captures whichever help
 function is installed when it is called.
 
+**It does not have to be the rain.** Set `Options.Anim` and any of the
+animations above goes behind the text instead — through `Render`, through the
+`Painter`, and through `cobrarain`, which needed no changes to gain it:
+
+```go
+cobrarain.On(rootCmd, backdrop.Options{Anim: plasma.New(), Dim: 3})
+p := backdrop.New(backdrop.Options{Anim: fire.New(0), Dim: 2, Pad: -1, GapMin: 4})
+```
+
+`RenderAnim` and `NewFor` are the same thing with the animation passed
+directly, for a caller holding one rather than filling in options. Which suits
+it is a question of density: the rain is mostly gaps, which is what makes it
+read as something *behind* the text, while a plasma or a fire covers every
+cell and puts the text on a solid field. `Dim` and `GapMin` are the knobs for
+that, and something sparse — a starfield, fireworks, `frost` — needs neither.
+The examples above set `Dim` for that reason: an undimmed plasma is bright
+enough across every cell that the help sits on it rather than in front of it.
+
 **An animated background behind a TUI.** `backdrop.New` returns a `Painter`
 that keeps the rain's state between frames, so a full-screen program can
 redraw its own text over a rain that keeps falling:
