@@ -17,6 +17,7 @@ import (
 	"github.com/gdamore/tcell/v3"
 
 	"github.com/0magnet/termanim/aquarium"
+	"github.com/0magnet/termanim/atom"
 	"github.com/0magnet/termanim/aurora"
 	"github.com/0magnet/termanim/boids"
 	"github.com/0magnet/termanim/bonsai"
@@ -33,6 +34,7 @@ import (
 	"github.com/0magnet/termanim/lavalamp"
 	"github.com/0magnet/termanim/life"
 	"github.com/0magnet/termanim/lightning"
+	"github.com/0magnet/termanim/logo"
 	"github.com/0magnet/termanim/matrix"
 	"github.com/0magnet/termanim/maze"
 	"github.com/0magnet/termanim/metaballs"
@@ -66,6 +68,7 @@ func noSeed(f func(tcell.Screen) error) func(tcell.Screen, int64) error {
 }
 
 var anims = map[string]anim{
+	"atom":      {atom.Run, "electrons on tilted orbits round a glowing nucleus"},
 	"aurora":    {aurora.Run, "curtains of light, folding and rippling"},
 	"bounce":    {bounce.Run, "the screensaver logo, and the wait for a corner"},
 	"flow":      {flow.Run, "particles carried through a curl-noise field"},
@@ -88,6 +91,7 @@ var anims = map[string]anim{
 	"fireworks": {fireworks.Run, "shells that rise, burst and droop"},
 	"langton":   {langton.Run, "Langton's ants, chaos then a highway"},
 	"lavalamp":  {lavalamp.Run, "wax rising and sinking in a lamp"},
+	"logo":      {logo.Run, "magnetosphere.net's op-art funnel, counter-scrolling"},
 	"life":      {life.Run, "Conway's life, colored by age"},
 	"matrix":    {matrix.Run, "falling columns of glyphs"},
 	"maze":      {maze.Run, "a maze carved, then solved"},

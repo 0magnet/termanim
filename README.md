@@ -1,6 +1,6 @@
 # termanim
 
-Thirty-four terminal animations in Go, on
+Thirty-six terminal animations in Go, on
 [tcell](https://github.com/gdamore/tcell). They run in a terminal, and —
 because they never create or destroy the screen they are given — equally in a
 browser through [tuiwasm](https://github.com/0magnet/tuiwasm) or inside any
@@ -19,7 +19,7 @@ package. Each has a page of its own:
 [life](https://tuiwasm.magnetosphere.net/?demo=life) — and the rest from the
 launcher there.
 
-![The thirty-four animations](docs/termanim-gallery.png "every animation in the package, one frame each, captured from the browser build")
+![The animations](docs/termanim-gallery.png "every animation in the package, one frame each, captured from the browser build")
 
 Each tile above is a real frame, screenshotted from the browser build rather
 than drawn for the README — so what a tile shows is what the animation does at
@@ -49,6 +49,7 @@ Fields and simulations, drawn on the pixel surface:
 | `starfield` | stars streaming past the viewer |
 | `donut` | a lit torus with a z-buffer |
 | `cube` | a rotating wireframe solid, shaded by depth |
+| `atom` | electrons on tilted orbits round a glowing nucleus |
 | `boids` | flocking by separation, alignment and cohesion |
 | `rain` | drops with depth, slant, streaks and splashes |
 | `snow` | flakes that sway, settle and drift into banks |
@@ -70,6 +71,7 @@ Fields and simulations, drawn on the pixel surface:
 | `parrot` | the party parrot, rolling once around the hue wheel |
 | `bounce` | the screensaver logo, and the wait for it to hit a corner |
 | `clock` | an analog clock, after aclock |
+| `logo` | magnetosphere.net's op-art funnel, its rings and field counter-scrolling |
 
 Made of characters, painting glyphs directly:
 
