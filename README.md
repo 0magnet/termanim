@@ -1,6 +1,6 @@
 # termanim
 
-Twenty-one terminal animations in Go, on
+Thirty-four terminal animations in Go, on
 [tcell](https://github.com/gdamore/tcell). They run in a terminal, and —
 because they never create or destroy the screen they are given — equally in a
 browser through [tuiwasm](https://github.com/0magnet/tuiwasm) or inside any
@@ -51,6 +51,19 @@ Fields and simulations, drawn on the pixel surface:
 | `langton` | Langton's ants: chaos, then the highway |
 | `sand` | grains heaping at their angle of repose |
 | `maze` | a maze carved by backtracking, then solved |
+| `ripple` | a ripple tank: rain falling, rings meeting and interfering |
+| `reaction` | Gray–Scott reaction–diffusion: spots that divide into a labyrinth |
+| `physarum` | slime mold laying trails and building a transport network |
+| `flow` | particles carried through a divergence-free curl-noise field |
+| `frost` | a crystal growing by diffusion-limited aggregation |
+| `wolfram` | elementary cellular automata scrolling upward — 30, 90, 110 |
+| `pendulum` | double pendulums released together, shearing apart |
+| `lightning` | a branching discharge: leader, return stroke, afterglow |
+| `aurora` | curtains of light, folding, with the creases where they turn |
+| `julia` | a Julia set morphing as its parameter walks the cardioid |
+| `parrot` | the party parrot, rolling once around the hue wheel |
+| `bounce` | the screensaver logo, and the wait for it to hit a corner |
+| `clock` | an analog clock, after aclock |
 
 Made of characters, painting glyphs directly:
 

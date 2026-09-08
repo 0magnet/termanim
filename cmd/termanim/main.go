@@ -17,27 +17,39 @@ import (
 	"github.com/gdamore/tcell/v3"
 
 	"github.com/0magnet/termanim/aquarium"
+	"github.com/0magnet/termanim/aurora"
 	"github.com/0magnet/termanim/boids"
 	"github.com/0magnet/termanim/bonsai"
+	"github.com/0magnet/termanim/bounce"
 	"github.com/0magnet/termanim/clock"
 	"github.com/0magnet/termanim/cube"
 	"github.com/0magnet/termanim/donut"
 	"github.com/0magnet/termanim/fire"
 	"github.com/0magnet/termanim/fireworks"
+	"github.com/0magnet/termanim/flow"
+	"github.com/0magnet/termanim/frost"
+	"github.com/0magnet/termanim/julia"
 	"github.com/0magnet/termanim/langton"
 	"github.com/0magnet/termanim/lavalamp"
 	"github.com/0magnet/termanim/life"
+	"github.com/0magnet/termanim/lightning"
 	"github.com/0magnet/termanim/matrix"
 	"github.com/0magnet/termanim/maze"
 	"github.com/0magnet/termanim/metaballs"
 	"github.com/0magnet/termanim/moire"
+	"github.com/0magnet/termanim/parrot"
+	"github.com/0magnet/termanim/pendulum"
+	"github.com/0magnet/termanim/physarum"
 	"github.com/0magnet/termanim/pipes"
 	"github.com/0magnet/termanim/plasma"
 	"github.com/0magnet/termanim/rain"
+	"github.com/0magnet/termanim/reaction"
+	"github.com/0magnet/termanim/ripple"
 	"github.com/0magnet/termanim/sand"
 	"github.com/0magnet/termanim/snow"
 	"github.com/0magnet/termanim/starfield"
 	"github.com/0magnet/termanim/tunnel"
+	"github.com/0magnet/termanim/wolfram"
 )
 
 // anim is one entry in the catalog. Every package exposes the same Run, so
@@ -54,6 +66,18 @@ func noSeed(f func(tcell.Screen) error) func(tcell.Screen, int64) error {
 }
 
 var anims = map[string]anim{
+	"aurora":    {aurora.Run, "curtains of light, folding and rippling"},
+	"bounce":    {bounce.Run, "the screensaver logo, and the wait for a corner"},
+	"flow":      {flow.Run, "particles carried through a curl-noise field"},
+	"frost":     {frost.Run, "a crystal growing by diffusion-limited aggregation"},
+	"julia":     {noSeed(julia.Run), "a Julia set morphing along the cardioid"},
+	"lightning": {lightning.Run, "a branching discharge, flash and afterglow"},
+	"parrot":    {parrot.Run, "the party parrot, rolling and cycling hue"},
+	"pendulum":  {pendulum.Run, "double pendulums shearing apart from one another"},
+	"physarum":  {physarum.Run, "slime mold building a transport network"},
+	"reaction":  {reaction.Run, "Gray-Scott reaction-diffusion, spots into labyrinth"},
+	"ripple":    {ripple.Run, "a ripple tank: rain, rings and interference"},
+	"wolfram":   {wolfram.Run, "elementary cellular automata scrolling upward"},
 	"aquarium":  {aquarium.Run, "fish swimming past swaying seaweed"},
 	"boids":     {boids.Run, "flocking by separation, alignment and cohesion"},
 	"bonsai":    {bonsai.Run, "a bonsai tree growing branch by branch"},
