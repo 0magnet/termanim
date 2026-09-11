@@ -113,3 +113,35 @@ func fullBlock(cols, rows int) []string {
 	}
 	return out
 }
+
+// fitRecorder is a Mask that notes the grid size it was fitted to.
+type fitRecorder struct{ cols, rows int }
+
+func (f *fitRecorder) ScaleAt(int, int) int { return 256 }
+func (f *fitRecorder) Fit(cols, rows int)   { f.cols, f.rows = cols, rows }
+
+func TestFitterIsToldTheGridSize(t *testing.T) {
+	m := matrix.New(3)
+	m.Resize(24, 6)
+	m.Advance(20)
+
+	r := &fitRecorder{}
+	f := NewFrame(24, 6)
+	f.SetMask(r)
+	f.FromMatrix(m, 256)
+
+	if r.cols != 24 || r.rows != 6 {
+		t.Errorf("Fit got %d,%d, want 24,6", r.cols, r.rows)
+	}
+}
+
+// A plain Mask that does not implement Fitter must still work.
+func TestNonFitterMaskIsFine(t *testing.T) {
+	m := matrix.New(4)
+	m.Resize(10, 4)
+	m.Advance(20)
+
+	f := NewFrame(10, 4)
+	f.SetMask(&Stencil{Rows: []string{"##"}, Inside: 300})
+	f.FromMatrix(m, 256) // must not panic
+}

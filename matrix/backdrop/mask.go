@@ -97,3 +97,30 @@ func maskAt(m Mask, x, y int) int {
 	}
 	return scaleOr256(m.ScaleAt(x, y))
 }
+
+// Fitter is a Mask that places itself against the grid it is used on. Frame
+// calls Fit before each fill, with the size of the grid about to be filled.
+//
+// A mask addressed in absolute cells cannot answer "put this in the empty
+// space to the right of the text" on its own: where that is depends on how
+// wide the screen turned out to be and how many rows the text came to, and
+// both are settled inside the compositor after the caller has handed its
+// options over. Fit is where a mask that wants to center, right-align, or
+// decline to appear at all on a small screen gets told what it is working
+// with.
+//
+// Implementing it is optional — a Stencil placed at fixed coordinates has
+// nothing to ask.
+type Fitter interface {
+	Mask
+
+	// Fit is called with the grid size before each fill.
+	Fit(cols, rows int)
+}
+
+// fitMask tells a mask the grid size, when it is the kind that wants to know.
+func fitMask(m Mask, cols, rows int) {
+	if f, ok := m.(Fitter); ok {
+		f.Fit(cols, rows)
+	}
+}

@@ -120,6 +120,7 @@ func (f *Frame) SetMask(m Mask) { f.mask = m }
 // exists for exactly that — sees the change behind its text as well as on a
 // screen of its own.
 func (f *Frame) FromMatrix(m *matrix.Matrix, dim int) {
+	fitMask(f.mask, f.cols, f.rows)
 	f.Clear()
 	pal := m.Palette
 	m.Cells(func(x, y int, c matrix.Cell) {
@@ -156,6 +157,7 @@ func (f *Frame) FromMatrix(m *matrix.Matrix, dim int) {
 // dim scales the colors themselves here. There is no ramp to walk down: a
 // surface is already the picture.
 func (f *Frame) FromSurface(s *canvas.Surface, dim int) {
+	fitMask(f.mask, f.cols, f.rows)
 	f.Clear()
 	w, h := s.Size()
 	cols, rows := f.cols, f.rows
