@@ -40,6 +40,7 @@ type Frame struct {
 	cols, rows int
 	cells      []Cell
 	lit        []bool
+	mask       Mask
 }
 
 // NewFrame returns a cleared frame of the given size.
@@ -99,6 +100,14 @@ func (f *Frame) At(x, y int) (Cell, bool) {
 	return f.cells[i], f.lit[i]
 }
 
+// SetMask sets the per-cell scale applied by the next fill, or nil for none.
+//
+// It lives on the frame rather than on the fill calls because a frame is
+// filled over and over — an animated backdrop refills it many times a second
+// — and the shape being cut out of it is a property of the screen, not of any
+// one frame.
+func (f *Frame) SetMask(m Mask) { f.mask = m }
+
 // FromMatrix fills f from the rain's current frame.
 //
 // dim scales the intensity before the palette is read rather than scaling the
@@ -117,6 +126,9 @@ func (f *Frame) FromMatrix(m *matrix.Matrix, dim int) {
 		n := c.Intensity
 		if dim != 256 {
 			n = n * dim / 256
+		}
+		if s := maskAt(f.mask, x, y); s != 256 {
+			n = n * s / 256
 		}
 		if n < 0 {
 			n = 0
@@ -155,8 +167,9 @@ func (f *Frame) FromSurface(s *canvas.Surface, dim int) {
 	}
 	for y := 0; y < rows; y++ {
 		for x := 0; x < cols; x++ {
-			t := dimColor(s.At(x, 2*y), dim)
-			b := dimColor(s.At(x, 2*y+1), dim)
+			d := dim * maskAt(f.mask, x, y) / 256
+			t := dimColor(s.At(x, 2*y), d)
+			b := dimColor(s.At(x, 2*y+1), d)
 			switch {
 			case t == tcell.ColorDefault && b == tcell.ColorDefault:
 				// Nothing here. Left unlit, so the text's own row shows
@@ -182,5 +195,30 @@ func dimColor(c tcell.Color, dim int) tcell.Color {
 		dim = 0
 	}
 	r, g, b := c.RGB()
-	return tcell.NewRGBColor(r*int32(dim)/256, g*int32(dim)/256, b*int32(dim)/256)
+	// A mask may scale past 256 to brighten, so the channels are clamped
+	// rather than allowed to wrap around into a different color.
+	return tcell.NewRGBColor(chn(r, dim), chn(g, dim), chn(b, dim))
+}
+
+// chn scales one color channel by dim out of 256, clamped to a byte.
+//
+// dim is clamped before the conversion as well as after the multiply: a mask
+// is caller-supplied and nothing stops it returning a number far larger than
+// any color, which would wrap on the way into an int32 and come out as a
+// different color rather than a brighter one.
+func chn(v int32, dim int) int32 {
+	if dim > 4096 {
+		dim = 4096
+	}
+	if dim < 0 {
+		dim = 0
+	}
+	v = v * int32(dim) / 256
+	if v > 255 {
+		return 255
+	}
+	if v < 0 {
+		return 0
+	}
+	return v
 }
