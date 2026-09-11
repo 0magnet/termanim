@@ -100,11 +100,12 @@ func (f *Frame) At(x, y int) (Cell, bool) {
 	return f.cells[i], f.lit[i]
 }
 
-// SetMask sets the per-cell scale applied by the next fill, or nil for none.
+// SetMask sets the per-cell intensity map applied by the next fill, or nil for
+// none.
 //
 // It lives on the frame rather than on the fill calls because a frame is
 // filled over and over — an animated backdrop refills it many times a second
-// — and the shape being cut out of it is a property of the screen, not of any
+// — and the shape being made of it is a property of the screen, not of any
 // one frame.
 func (f *Frame) SetMask(m Mask) { f.mask = m }
 
@@ -119,25 +120,41 @@ func (f *Frame) SetMask(m Mask) { f.mask = m }
 // The palette is the matrix's own, so a caller that tuned it — Painter.Matrix
 // exists for exactly that — sees the change behind its text as well as on a
 // screen of its own.
+//
+// A mask changes which cells have to be looked at. Without one only the lit
+// cells matter and Cells reports exactly those; with one, a dark cell may be
+// asked to light up, so every cell of the grid is visited. The unmasked path
+// is kept because it is the common one and it is the cheaper of the two.
 func (f *Frame) FromMatrix(m *matrix.Matrix, dim int) {
 	fitMask(f.mask, f.cols, f.rows)
 	f.Clear()
 	pal := m.Palette
-	m.Cells(func(x, y int, c matrix.Cell) {
-		n := c.Intensity
-		if dim != 256 {
-			n = n * dim / 256
+
+	if f.mask == nil {
+		m.Cells(func(x, y int, c matrix.Cell) {
+			f.Set(x, y, Cell{Rune: c.Rune, Fg: pal[clamp255(scale(c.Intensity, dim))], Bold: c.Hot})
+		})
+		return
+	}
+
+	for y := 0; y < f.rows; y++ {
+		for x := 0; x < f.cols; x++ {
+			c, lit := m.CellAt(x, y)
+			n := maskIntensity(f.mask, x, y, clamp255(scale(c.Intensity, dim)))
+			if n <= 0 {
+				continue
+			}
+			r := c.Rune
+			if !lit {
+				// The rain holds a glyph in every cell whether it is lighting
+				// it or not, and that is the one to draw: the alphabet and the
+				// scrambling stay the rain's own, so a filled shape reads as
+				// rain that is denser here rather than as something stamped on.
+				r = m.GlyphAt(x, y)
+			}
+			f.Set(x, y, Cell{Rune: r, Fg: pal[n], Bold: c.Hot && lit})
 		}
-		if s := maskAt(f.mask, x, y); s != 256 {
-			n = n * s / 256
-		}
-		if n < 0 {
-			n = 0
-		} else if n > 255 {
-			n = 255
-		}
-		f.Set(x, y, Cell{Rune: c.Rune, Fg: pal[n], Bold: c.Hot})
-	})
+	}
 }
 
 // FromSurface fills f from a pixel surface, two pixel rows to a cell row.
@@ -169,7 +186,10 @@ func (f *Frame) FromSurface(s *canvas.Surface, dim int) {
 	}
 	for y := 0; y < rows; y++ {
 		for x := 0; x < cols; x++ {
-			d := dim * maskAt(f.mask, x, y) / 256
+			// A surface is already the picture, so a mask acts on it as a scale:
+			// what it would do to a full-intensity cell is what it does to this
+			// one. There is no glyph to fill an empty cell with here.
+			d := dim * maskIntensity(f.mask, x, y, 256) / 256
 			t := dimColor(s.At(x, 2*y), d)
 			b := dimColor(s.At(x, 2*y+1), d)
 			switch {
