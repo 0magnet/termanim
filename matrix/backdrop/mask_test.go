@@ -269,3 +269,105 @@ func TestTintChannelsAreClamped(t *testing.T) {
 		t.Errorf("channels not clamped: got %d,%d,%d want 0,255,255", r, g, b)
 	}
 }
+
+// knockout is a Washer that paints its shape solid and draws whatever rain
+// crosses it in black — the shape as a color with the rain punched through.
+type knockout struct{ Stencil }
+
+func (k *knockout) WashAt(x, y int) (int32, int32, int32, bool) {
+	if !k.Covers(x, y) {
+		return 0, 0, 0, false
+	}
+	return 0, 0x72, 0xff, true
+}
+
+func (k *knockout) TintAt(x, y int, r, g, b int32) (int32, int32, int32) {
+	if !k.Covers(x, y) {
+		return r, g, b
+	}
+	return 0, 0, 0
+}
+
+// A wash makes its shape solid: every cell inside it is drawn, including the
+// ones the rain left dark, which is the whole point of having one.
+func TestWashFillsEveryCellOfItsShape(t *testing.T) {
+	m := matrix.New(13)
+	m.Resize(20, 10)
+	m.Advance(60)
+
+	f := NewFrame(20, 10)
+	f.SetMask(&knockout{Stencil{Rows: fullBlock(6, 4), X: 2, Y: 2}})
+	f.FromMatrix(m, 256)
+
+	for y := 2; y < 6; y++ {
+		for x := 2; x < 8; x++ {
+			c, lit := f.At(x, y)
+			if !lit {
+				t.Fatalf("cell %d,%d inside the wash is not drawn", x, y)
+			}
+			r, g, b := c.Bg.RGB()
+			if r != 0 || g != 0x72 || b != 0xff {
+				t.Fatalf("cell %d,%d has background %d,%d,%d, want the wash", x, y, r, g, b)
+			}
+		}
+	}
+}
+
+// Outside the shape a wash changes nothing at all.
+func TestWashLeavesTheRestAlone(t *testing.T) {
+	m := matrix.New(17)
+	m.Resize(20, 10)
+	m.Advance(60)
+
+	washed := NewFrame(20, 10)
+	washed.SetMask(&knockout{Stencil{Rows: fullBlock(4, 3), X: 0, Y: 0}})
+	washed.FromMatrix(m, 256)
+
+	plain := NewFrame(20, 10)
+	plain.FromMatrix(m, 256)
+
+	for y := 0; y < 10; y++ {
+		for x := 0; x < 20; x++ {
+			if x < 4 && y < 3 {
+				continue
+			}
+			a, litA := plain.At(x, y)
+			b, litB := washed.At(x, y)
+			if litA != litB || a != b {
+				t.Fatalf("cell %d,%d outside the wash changed", x, y)
+			}
+		}
+	}
+}
+
+// A cell the rain lit inside the wash keeps its glyph and takes the tint, so
+// the rain reads as a knockout rather than disappearing.
+func TestWashKeepsTheRainsGlyphs(t *testing.T) {
+	m := matrix.New(23)
+	m.Resize(12, 8)
+	m.Advance(60)
+
+	f := NewFrame(12, 8)
+	f.SetMask(&knockout{Stencil{Rows: fullBlock(12, 8)}})
+	f.FromMatrix(m, 256)
+
+	var sawGlyph bool
+	for y := 0; y < 8; y++ {
+		for x := 0; x < 12; x++ {
+			c, _ := f.At(x, y)
+			if _, lit := m.CellAt(x, y); !lit {
+				continue
+			}
+			sawGlyph = true
+			if c.Rune != m.GlyphAt(x, y) {
+				t.Fatalf("cell %d,%d lost the rain's glyph", x, y)
+			}
+			if r, g, b := c.Fg.RGB(); r != 0 || g != 0 || b != 0 {
+				t.Fatalf("cell %d,%d was not tinted black: %d,%d,%d", x, y, r, g, b)
+			}
+		}
+	}
+	if !sawGlyph {
+		t.Fatal("no lit rain cells to check")
+	}
+}
