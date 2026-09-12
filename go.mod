@@ -16,7 +16,7 @@ require (
 
 require (
 	github.com/gdamore/encoding v1.0.1 // indirect
-	github.com/gdamore/tcell/v3 v3.4.2
+	github.com/gdamore/tcell/v3 v3.5.0
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.4.1 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
