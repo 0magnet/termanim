@@ -177,10 +177,17 @@ func fitMask(m Mask, cols, rows int) {
 // as its background. A mask that can say "and this cell is blue" gets a shape
 // the eye finds without looking for it.
 //
-// TintAt is handed the color the backdrop resolved for the cell — for the rain,
+// TintAt is handed the RGB the backdrop resolved for the cell — for the rain,
 // its palette entry for the post-mask intensity — and returns what to draw. It
 // is called only for cells that end up lit, so a mask need not care about the
-// dark ones, and returning c unchanged is a no-op.
+// dark ones, and returning the channels unchanged is a no-op.
+//
+// Plain channels rather than a tcell.Color so that implementing this does not
+// oblige a caller to depend on the terminal library. A mask is a statement
+// about a shape; which library ends up painting it is the compositor's
+// business, and skywire — the first consumer — would otherwise have promoted
+// tcell from an indirect dependency to a direct one to write four lines of
+// arithmetic.
 //
 // Optional, like Fitter: a mask that only varies brightness need not implement
 // it.
@@ -188,13 +195,29 @@ type Tinter interface {
 	Mask
 
 	// TintAt returns the color to draw at x, y, given the one already resolved.
-	TintAt(x, y int, c tcell.Color) tcell.Color
+	TintAt(x, y int, r, g, b int32) (int32, int32, int32)
 }
 
-// tintAt applies a possibly-absent tint.
+// tintAt applies a possibly-absent tint, converting at the boundary so the
+// Tinter never sees a tcell type.
 func tintAt(m Mask, x, y int, c tcell.Color) tcell.Color {
-	if t, ok := m.(Tinter); ok {
-		return t.TintAt(x, y, c)
+	t, ok := m.(Tinter)
+	if !ok {
+		return c
 	}
-	return c
+	r, g, b := c.RGB()
+	r, g, b = t.TintAt(x, y, r, g, b)
+	return tcell.NewRGBColor(clampChan(r), clampChan(g), clampChan(b))
+}
+
+// clampChan holds a tint's channel inside a byte; a Tinter is caller-supplied
+// and nothing stops it returning a number no color has.
+func clampChan(v int32) int32 {
+	if v < 0 {
+		return 0
+	}
+	if v > 255 {
+		return 255
+	}
+	return v
 }

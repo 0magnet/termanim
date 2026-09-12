@@ -204,3 +204,68 @@ func fullBlock(cols, rows int) []string {
 	}
 	return out
 }
+
+// blueTint is a Tinter that recolors its shape, the way skywire's logo does.
+type blueTint struct{ Stencil }
+
+func (b *blueTint) TintAt(x, y int, r, g, bl int32) (int32, int32, int32) {
+	if !b.Covers(x, y) {
+		return r, g, bl
+	}
+	lvl := (r*30 + g*59 + bl*11) / 100
+	return 0, 0x72 * lvl / 255, 0xff * lvl / 255
+}
+
+// A tint recolors the cells its shape covers and leaves the rest alone.
+func TestTinterRecolorsOnlyItsShape(t *testing.T) {
+	m := matrix.New(11)
+	m.Resize(16, 8)
+	m.Advance(60)
+
+	f := NewFrame(16, 8)
+	f.SetMask(&blueTint{Stencil{Rows: fullBlock(4, 3), X: 0, Y: 0, Floor: 80}})
+	f.FromMatrix(m, 256)
+
+	for y := 0; y < 8; y++ {
+		for x := 0; x < 16; x++ {
+			c, lit := f.At(x, y)
+			if !lit {
+				continue
+			}
+			r, g, b := c.Fg.RGB()
+			inShape := x < 4 && y < 3
+			if inShape && b <= g {
+				t.Errorf("cell %d,%d inside the shape is not blue: %d,%d,%d", x, y, r, g, b)
+			}
+			if !inShape && b > g {
+				t.Errorf("cell %d,%d outside the shape was recolored: %d,%d,%d", x, y, r, g, b)
+			}
+		}
+	}
+}
+
+// A tint returning a channel no color has must not wrap into a different one.
+type wildTint struct{ Stencil }
+
+func (w *wildTint) TintAt(int, int, int32, int32, int32) (int32, int32, int32) {
+	return -50, 9000, 300
+}
+
+func TestTintChannelsAreClamped(t *testing.T) {
+	m := matrix.New(2)
+	m.Resize(6, 4)
+	m.Advance(30)
+
+	f := NewFrame(6, 4)
+	f.SetMask(&wildTint{Stencil{Rows: fullBlock(6, 4), Floor: 90}})
+	f.FromMatrix(m, 256)
+
+	c, lit := f.At(0, 0)
+	if !lit {
+		t.Fatal("expected a lit cell")
+	}
+	r, g, b := c.Fg.RGB()
+	if r != 0 || g != 255 || b != 255 {
+		t.Errorf("channels not clamped: got %d,%d,%d want 0,255,255", r, g, b)
+	}
+}
