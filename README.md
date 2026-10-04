@@ -203,6 +203,20 @@ of characters, and squeezing them onto a pixel surface would throw away the
 thing they are made of, so they implement `canvas.CellAnimation` and paint
 glyphs. Both shapes share the same loop, keys and resize handling.
 
+## ASCII by shape
+
+`termanim -shape cube` draws any pixel animation as plain ASCII instead: the
+animation gets a surface of 2x4 pixels per cell, each cell is sampled in six
+circles, and the printable character whose own samples are nearest is drawn
+in the cell's color. This is Alex Harri's method from
+[ASCII characters are not pixels](https://alexharri.com/blog/ascii-rendering);
+the matcher and its glyph table, measured from a real bitmap font, come from
+[img2txt-go](https://github.com/0magnet/img2txt-go)'s `shape` package, shared
+with its `img2txt -s`. Wireframes, mazes and outlines come out as `/ \ | _`
+strokes; smooth color fields like plasma lose most of their color, so the half
+blocks stay the default. A host turns it on by wrapping its screen in
+`canvas.ShapeScreen`; glyph animations ignore it.
+
 ## Writing another one
 
 Implement two methods and hand it to `canvas.Run`:

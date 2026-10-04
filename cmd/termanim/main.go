@@ -2,6 +2,7 @@
 //
 //	termanim fire
 //	termanim donut
+//	termanim -shape cube
 //	termanim -list
 //
 // Press q, Escape or Ctrl-C to stop.
@@ -22,6 +23,7 @@ import (
 	"github.com/0magnet/termanim/boids"
 	"github.com/0magnet/termanim/bonsai"
 	"github.com/0magnet/termanim/bounce"
+	"github.com/0magnet/termanim/canvas"
 	"github.com/0magnet/termanim/clock"
 	"github.com/0magnet/termanim/cube"
 	"github.com/0magnet/termanim/donut"
@@ -116,7 +118,7 @@ func names() []string {
 }
 
 func usage(w *os.File) {
-	fmt.Fprintf(w, "usage: termanim <animation>\n\n") //nolint:errcheck,gosec
+	fmt.Fprintf(w, "usage: termanim [-shape] <animation>\n\n") //nolint:errcheck,gosec
 	// Measured rather than fixed: a name longer than the column pushes its own
 	// description out of line and leaves every other row indented to a margin
 	// nothing sits at any more.
@@ -129,23 +131,30 @@ func usage(w *os.File) {
 	for _, n := range names() {
 		fmt.Fprintf(w, "  %-*s %s\n", pad, n, anims[n].desc) //nolint:errcheck,gosec
 	}
+	fmt.Fprintf(w, "\n-shape draws pixel animations as ASCII characters chosen by shape\n"+ //nolint:errcheck,gosec
+		"rather than in half blocks.\n")
 	fmt.Fprintf(w, "\nPress q, Escape or Ctrl-C to stop.\n") //nolint:errcheck,gosec
 }
 
 func main() {
-	if len(os.Args) != 2 {
+	args := os.Args[1:]
+	shape := false
+	if len(args) > 0 && (args[0] == "-shape" || args[0] == "--shape") {
+		shape, args = true, args[1:]
+	}
+	if len(args) != 1 {
 		usage(os.Stderr)
 		os.Exit(2)
 	}
-	switch os.Args[1] {
+	switch args[0] {
 	case "-h", "--help", "-list", "--list":
 		usage(os.Stdout)
 		return
 	}
-	a, ok := anims[os.Args[1]]
+	a, ok := anims[args[0]]
 	if !ok {
 		fmt.Fprintf(os.Stderr, "termanim: no animation %q\n\navailable: %s\n",
-			os.Args[1], strings.Join(names(), " "))
+			args[0], strings.Join(names(), " "))
 		os.Exit(2)
 	}
 
@@ -162,7 +171,12 @@ func main() {
 	// screen with no cursor and no echo.
 	defer screen.Fini()
 
-	if err := a.run(screen, time.Now().UnixNano()); err != nil {
+	target := screen
+	if shape {
+		// Glyph and Braille animations ignore it; they draw characters already.
+		target = canvas.ShapeScreen{Screen: screen}
+	}
+	if err := a.run(target, time.Now().UnixNano()); err != nil {
 		screen.Fini()
 		fmt.Fprintln(os.Stderr, "termanim:", err)
 		os.Exit(1)

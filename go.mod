@@ -4,6 +4,7 @@ go 1.26.0
 
 require (
 	github.com/0magnet/calvin v0.0.0
+	github.com/0magnet/img2txt-go v0.0.0-20261004020033-e1dab3cfcb56
 	github.com/spf13/cobra v1.10.2
 	golang.org/x/term v0.46.0
 )
