@@ -2,7 +2,7 @@
 ## explicit; go 1.26.0
 github.com/0magnet/calvin
 github.com/0magnet/calvin/clihelp
-# github.com/0magnet/img2txt-go v0.0.0-20261004020033-e1dab3cfcb56
+# github.com/0magnet/img2txt-go v0.0.0
 ## explicit; go 1.26.0
 github.com/0magnet/img2txt-go/shape
 # github.com/clipperhouse/displaywidth v0.11.0

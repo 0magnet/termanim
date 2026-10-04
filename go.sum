@@ -1,7 +1,7 @@
 github.com/0magnet/calvin v0.0.0 h1:gUPh78127uuHtpm3GGWo5N+2gqz/qAi3yVTh4BdvuaU=
 github.com/0magnet/calvin v0.0.0/go.mod h1:lSY+7FAzjDu2AlOiyR6pXXzJGhI1U7d4ZNHpzWyAYIg=
-github.com/0magnet/img2txt-go v0.0.0-20261004020033-e1dab3cfcb56 h1:8xmE6aerdBnFHo3xXiTYKczXkn/y+7reb+vZoQs6ux4=
-github.com/0magnet/img2txt-go v0.0.0-20261004020033-e1dab3cfcb56/go.mod h1:LpURwrbNPAy3CrbhLgVw4ROogaDCRmpu7ZKQwNt2v7Q=
+github.com/0magnet/img2txt-go v0.0.0 h1:k+3AFB5j1HhXDqcGsZMW+6/CDl8ezAmaD8D0MeOkrW4=
+github.com/0magnet/img2txt-go v0.0.0/go.mod h1:LpURwrbNPAy3CrbhLgVw4ROogaDCRmpu7ZKQwNt2v7Q=
 github.com/clipperhouse/displaywidth v0.11.0 h1:lBc6kY44VFw+TDx4I8opi/EtL9m20WSEFgwIwO+UVM8=
 github.com/clipperhouse/displaywidth v0.11.0/go.mod h1:bkrFNkf81G8HyVqmKGxsPufD3JhNl3dSqnGhOoSD/o0=
 github.com/clipperhouse/uax29/v2 v2.7.0 h1:+gs4oBZ2gPfVrKPthwbMzWZDaAFPGYK72F0NJv2v7Vk=
