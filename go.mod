@@ -3,8 +3,8 @@ module github.com/0magnet/termanim
 go 1.26.0
 
 require (
-	github.com/0magnet/calvin v0.0.0
-	github.com/0magnet/img2txt-go v0.0.0
+	github.com/0magnet/calvin v0.0.1-0.20261004205601-db77b5906bf6
+	github.com/0magnet/img2txt-go v0.0.1-0.20261004205026-36144fcfb3b3
 	github.com/spf13/cobra v1.10.2
 	golang.org/x/term v0.46.0
 )
