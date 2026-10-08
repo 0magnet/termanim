@@ -70,7 +70,6 @@ Fields and simulations, drawn on the pixel surface:
 | `julia` | a Julia set morphing as its parameter walks the cardioid |
 | `parrot` | the party parrot, rolling once around the hue wheel |
 | `bounce` | the screensaver logo, and the wait for it to hit a corner |
-| `clock` | an analog clock, after aclock |
 | `magnetosphere` | the logo from magnetosphere.net, its rings and field counter-scrolling |
 
 Made of characters, painting glyphs directly:
@@ -81,6 +80,7 @@ Made of characters, painting glyphs directly:
 | `aquarium` | fish swimming past swaying seaweed |
 | `pipes` | pipes growing and turning, with correct elbows |
 | `bonsai` | a bonsai tree growing branch by branch |
+| `clock` | an analog clock, after aclock |
 
 `canvas` holds the surface, the palettes and the frame loop they share.
 
@@ -164,7 +164,7 @@ fmt.Print(backdrop.RenderAnim(help, starfield.New(0), backdrop.Options{}))
 p := backdrop.NewFor(plasma.New(), backdrop.Options{Pad: -1, GapMin: 4})
 ```
 
-Anything implementing `canvas.Animation` works, which is sixteen of the effects
+Anything implementing `canvas.Animation` works, which is thirty-one of the effects
 here and anything you write. What made this possible was giving the compositor
 a cell type of its own: it used to read `matrix.Cell`, which carries an
 `Intensity` into a green ramp and a `Hot` flag for the highlighted leading
@@ -198,7 +198,7 @@ bottom — which gives two independently colored pixels per cell, roughly
 square, at no cost. An animation sees a surface twice the height of the
 terminal and never thinks about it.
 
-Not everything wants that. `matrix`, `aquarium`, `pipes` and `bonsai` are made
+Not everything wants that. `matrix`, `aquarium`, `pipes`, `bonsai` and `clock` are made
 of characters, and squeezing them onto a pixel surface would throw away the
 thing they are made of, so they implement `canvas.CellAnimation` and paint
 glyphs. Both shapes share the same loop, keys and resize handling.
