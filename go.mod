@@ -3,10 +3,10 @@ module github.com/0magnet/termanim
 go 1.26.0
 
 require (
-	github.com/0magnet/calvin v0.0.1-0.20261008155441-86637b449fe0
-	github.com/0magnet/img2txt-go v0.0.1-0.20261008155316-9af9946b28d9
+	github.com/0magnet/calvin v0.0.1-0.20261010111553-d1d2be37be6a
+	github.com/0magnet/img2txt-go v0.0.1-0.20261010111608-9ac2cd47b853
 	github.com/spf13/cobra v1.10.2
-	golang.org/x/term v0.46.0
+	golang.org/x/term v0.47.0
 )
 
 require (
@@ -21,6 +21,6 @@ require (
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.4.1 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
-	golang.org/x/sys v0.48.0 // indirect
-	golang.org/x/text v0.42.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/text v0.43.0 // indirect
 )
