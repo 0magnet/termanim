@@ -26,9 +26,9 @@ than drawn for the README — so what a tile shows is what the animation does at
 some moment, including the ones that take a while to establish themselves.
 
 ```sh
-go install github.com/0magnet/termanim/cmd/termanim@latest
+go install github.com/0magnet/termanim@latest
 
-termanim --list
+termanim --list   # or: termanim --help
 termanim donut
 ```
 
@@ -101,7 +101,7 @@ cobrarain.On(rootCmd, backdrop.Options{})
 
 That is the whole integration. Help for every command under the root goes
 through it, because cobra looks up the help function on the parent when a
-command has none of its own. `cmd/rainhelp` is a worked example — a CLI with
+command has none of its own. `termanim rainhelp` is a worked example — a CLI with
 nothing in it but that one call.
 
 It is a *still*: nothing takes over the terminal, nothing waits for a key, and
@@ -109,8 +109,8 @@ the help scrolls up the scrollback the way help does. Seed it and the same
 frame comes back every time:
 
 ```
-go run ./cmd/rainhelp --seed 1 --help     # the same frame every time
-go run ./cmd/rainhelp --help | cat        # plain, as a pipe should be
+go run . rainhelp --seed 1 --help     # the same frame every time
+go run . rainhelp --help | cat        # plain, as a pipe should be
 ```
 
 Redirecting or piping turns it off, so `--help | less` and a `--help` pasted
@@ -205,7 +205,7 @@ glyphs. Both shapes share the same loop, keys and resize handling.
 
 ## ASCII by shape
 
-`termanim -shape cube` draws any pixel animation as plain ASCII instead: the
+`termanim --shape cube` draws any pixel animation as plain ASCII instead: the
 animation gets a surface of 2x4 pixels per cell, each cell is sampled in six
 circles, and the printable character whose own samples are nearest is drawn
 in the cell's color. This is Alex Harri's method from

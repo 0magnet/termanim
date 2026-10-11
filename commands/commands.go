@@ -1,21 +1,23 @@
-// Command termanim plays one of the terminal animations in this repository.
+// Package commands is the termanim command: one subcommand per animation,
+// plus rainhelp, an example CLI with the code rain behind its help.
 //
 //	termanim fire
 //	termanim donut
-//	termanim -shape cube
-//	termanim -list
+//	termanim --shape cube
+//	termanim list
 //
 // Press q, Escape or Ctrl-C to stop.
-package main
+package commands
 
 import (
 	"fmt"
 	"os"
 	"sort"
-	"strings"
 	"time"
 
+	"github.com/0magnet/calvin/clihelp"
 	"github.com/gdamore/tcell/v3"
+	"github.com/spf13/cobra"
 
 	"github.com/0magnet/termanim/aquarium"
 	"github.com/0magnet/termanim/atom"
@@ -117,55 +119,34 @@ func names() []string {
 	return out
 }
 
-func usage(w *os.File) {
-	fmt.Fprintf(w, "usage: termanim [-shape] <animation>\n\n") //nolint:errcheck,gosec
-	// Measured rather than fixed: a name longer than the column pushes its own
-	// description out of line and leaves every other row indented to a margin
-	// nothing sits at any more.
-	pad := 0
-	for _, n := range names() {
-		if len(n) > pad {
-			pad = len(n)
+var shape, list bool
+
+// RootCmd is the termanim command.
+var RootCmd = &cobra.Command{
+	Use:   "termanim <animation>",
+	Short: "play a terminal animation",
+	Long: "termanim plays one of the terminal animations in this repository.\n\n" +
+		"Press q, Escape or Ctrl-C to stop.",
+	Args: cobra.ArbitraryArgs,
+	RunE: func(c *cobra.Command, args []string) error {
+		if list {
+			return c.Help()
 		}
-	}
-	for _, n := range names() {
-		fmt.Fprintf(w, "  %-*s %s\n", pad, n, anims[n].desc) //nolint:errcheck,gosec
-	}
-	fmt.Fprintf(w, "\n-shape draws pixel animations as ASCII characters chosen by shape\n"+ //nolint:errcheck,gosec
-		"rather than in half blocks.\n")
-	fmt.Fprintf(w, "\nPress q, Escape or Ctrl-C to stop.\n") //nolint:errcheck,gosec
+		if len(args) == 0 {
+			return c.Help()
+		}
+		return fmt.Errorf("no animation %q", args[0])
+	},
 }
 
-func main() {
-	args := os.Args[1:]
-	shape := false
-	if len(args) > 0 && (args[0] == "-shape" || args[0] == "--shape") {
-		shape, args = true, args[1:]
-	}
-	if len(args) != 1 {
-		usage(os.Stderr)
-		os.Exit(2)
-	}
-	switch args[0] {
-	case "-h", "--help", "-list", "--list":
-		usage(os.Stdout)
-		return
-	}
-	a, ok := anims[args[0]]
-	if !ok {
-		fmt.Fprintf(os.Stderr, "termanim: no animation %q\n\navailable: %s\n",
-			args[0], strings.Join(names(), " "))
-		os.Exit(2)
-	}
-
+// play opens the screen and runs one animation until the user stops it.
+func play(a anim) error {
 	screen, err := tcell.NewScreen()
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "termanim:", err)
-		os.Exit(1)
+		return err
 	}
 	if err := screen.Init(); err != nil {
-		fmt.Fprintln(os.Stderr, "termanim:", err)
-		os.Exit(1)
+		return err
 	}
 	// Fini restores the terminal. Without it an error leaves the user in a
 	// screen with no cursor and no echo.
@@ -178,7 +159,32 @@ func main() {
 	}
 	if err := a.run(target, time.Now().UnixNano()); err != nil {
 		screen.Fini()
-		fmt.Fprintln(os.Stderr, "termanim:", err)
+		return err
+	}
+	return nil
+}
+
+func init() {
+	RootCmd.PersistentFlags().BoolVar(&shape, "shape", false,
+		"draw pixel animations as ASCII characters chosen by shape rather than in half blocks")
+	RootCmd.Flags().BoolVar(&list, "list", false, "list the animations")
+	for _, n := range names() {
+		a := anims[n]
+		RootCmd.AddCommand(&cobra.Command{
+			Use:   n,
+			Short: a.desc,
+			Args:  cobra.NoArgs,
+			RunE:  func(*cobra.Command, []string) error { return play(a) },
+		})
+	}
+	RootCmd.AddCommand(rainhelpCmd())
+	clihelp.Init(RootCmd, "termanim")
+	wireRainhelp()
+}
+
+// Execute runs the termanim command.
+func Execute() {
+	if err := RootCmd.Execute(); err != nil {
 		os.Exit(1)
 	}
 }

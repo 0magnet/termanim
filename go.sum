@@ -1,5 +1,7 @@
-github.com/0magnet/calvin v0.0.1-0.20261010111553-d1d2be37be6a h1:4B39WdDDj53VrZquJ/s4dNDmoUBrJKiCc9h2ZP9vbEU=
-github.com/0magnet/calvin v0.0.1-0.20261010111553-d1d2be37be6a/go.mod h1:fDKTOdrNsrXlOujTq6o2fw3Fa843D3GahVvMiboPy9U=
+github.com/0magnet/calvin v0.0.1-0.20261011230737-763f06d9d646 h1:diD9ZS5jF4WDKhmLqliEIzdBGHEjglpKMSNyGOpH7hM=
+github.com/0magnet/calvin v0.0.1-0.20261011230737-763f06d9d646/go.mod h1:9K0SLu2+cQYQ3ssY7ezYh8itBC4EhoXBMBxKVJNvxVs=
+github.com/0magnet/coloredcobra v1.0.4-0.20261011230509-d5385cf44398 h1:M3jwYEvNP5nFCKReDX7HCArUOEVqgO+yZgJ00qJGLvc=
+github.com/0magnet/coloredcobra v1.0.4-0.20261011230509-d5385cf44398/go.mod h1:XOyBWsYWPuG3gboQHaOve/ubY8HaTqCGjJ+791sF5cM=
 github.com/0magnet/img2txt-go v0.0.1-0.20261010111608-9ac2cd47b853 h1:ox1r7x9mnA35QeRZSSypXwsUJ3CLOeollEnr+klBFYY=
 github.com/0magnet/img2txt-go v0.0.1-0.20261010111608-9ac2cd47b853/go.mod h1:M/nZ3W+0x5ti9fZDs6Cx+6eTZnwVdGMjeMuRDmOB5es=
 github.com/clipperhouse/displaywidth v0.11.0 h1:lBc6kY44VFw+TDx4I8opi/EtL9m20WSEFgwIwO+UVM8=
@@ -7,6 +9,8 @@ github.com/clipperhouse/displaywidth v0.11.0/go.mod h1:bkrFNkf81G8HyVqmKGxsPufD3
 github.com/clipperhouse/uax29/v2 v2.7.0 h1:+gs4oBZ2gPfVrKPthwbMzWZDaAFPGYK72F0NJv2v7Vk=
 github.com/clipperhouse/uax29/v2 v2.7.0/go.mod h1:EFJ2TJMRUaplDxHKj1qAEhCtQPW2tJSwu5BF98AuoVM=
 github.com/cpuguy83/go-md2man/v2 v2.0.6/go.mod h1:oOW0eioCTA6cOiMLiUPZOpcVxMig6NIQQ7OS05n1F4g=
+github.com/fatih/color v1.19.0 h1:Zp3PiM21/9Ld6FzSKyL5c/BULoe/ONr9KlbYVOfG8+w=
+github.com/fatih/color v1.19.0/go.mod h1:zNk67I0ZUT1bEGsSGyCZYZNrHuTkJJB+r6Q9VuMi0LE=
 github.com/gdamore/encoding v1.0.1 h1:YzKZckdBL6jVt2Gc+5p82qhrGiqMdG/eNs6Wy0u3Uhw=
 github.com/gdamore/encoding v1.0.1/go.mod h1:0Z0cMFinngz9kS1QfMjCP8TY7em3bZYeeklsSDPivEo=
 github.com/gdamore/tcell/v3 v3.6.0 h1:jW20qS6Tm38KVDqLHq9KWSvyjNl00FbhbD8rIAnHBws=
@@ -15,6 +19,8 @@ github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
 github.com/lucasb-eyer/go-colorful v1.4.1 h1:1EO+WB73+EH8EVbzlrG3KLAfEypQWVHIBqlTf+2hNss=
 github.com/lucasb-eyer/go-colorful v1.4.1/go.mod h1:R4dSotOR9KMtayYi1e77YzuveK+i7ruzyGqttikkLy0=
+github.com/mattn/go-colorable v0.1.16 h1:+2YjeAe7xP1OQbZW1jERPWWCDLlNqFNCvjiqGiAt84A=
+github.com/mattn/go-colorable v0.1.16/go.mod h1:6LmQG8QLFO4G5z1gPvYEzlUgJ2wF+stgPZH1UqBm1s8=
 github.com/mattn/go-isatty v0.0.24 h1:tGZZoVgT/KiqK1c8ocVLeDS8BSWMRd47J3Lbz7vsReI=
 github.com/mattn/go-isatty v0.0.24/go.mod h1:nMCL3Zebbrt45jsMDgnfIwz6ydEQApk5oEI3HqDio6A=
 github.com/russross/blackfriday/v2 v2.1.0/go.mod h1:+Rmxgy9KzJVeS9/2gXHxylqXiyQDYRxCVz55jmeOWTM=

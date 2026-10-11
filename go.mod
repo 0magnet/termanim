@@ -3,15 +3,18 @@ module github.com/0magnet/termanim
 go 1.26.0
 
 require (
-	github.com/0magnet/calvin v0.0.1-0.20261010111553-d1d2be37be6a
+	github.com/0magnet/calvin v0.0.1-0.20261011230737-763f06d9d646
 	github.com/0magnet/img2txt-go v0.0.1-0.20261010111608-9ac2cd47b853
 	github.com/spf13/cobra v1.10.2
 	golang.org/x/term v0.47.0
 )
 
 require (
+	github.com/0magnet/coloredcobra v1.0.4-0.20261011230509-d5385cf44398 // indirect
 	github.com/clipperhouse/displaywidth v0.11.0 // indirect
 	github.com/clipperhouse/uax29/v2 v2.7.0 // indirect
+	github.com/fatih/color v1.19.0 // indirect
+	github.com/mattn/go-colorable v0.1.16 // indirect
 	github.com/mattn/go-isatty v0.0.24 // indirect
 )
 
