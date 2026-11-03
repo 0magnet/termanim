@@ -306,3 +306,34 @@ func TestBrightnessDoesNotChangeAcrossTheOldPanelEdge(t *testing.T) {
 			"the panel is still being dimmed", far, near)
 	}
 }
+
+// A frame several screens tall, proportioned to one, rains like a screen on
+// every one of them. Proportioned to itself, it gets the streams of a single
+// screen spread over all of it.
+func TestScreenKeepsEveryPageRaining(t *testing.T) {
+	const cols, rows, pages = 120, 60, 8
+	heads := func(screen int) []int {
+		s := Render("", Options{Width: cols, Height: rows * pages, Force: true, Seed: 3, Pad: -1, Screen: screen})
+		lines := strings.Split(strings.TrimSuffix(s, "\n"), "\n")
+		per := make([]int, pages)
+		for p := range per {
+			per[p] = strings.Count(strings.Join(lines[p*rows:(p+1)*rows], ""), "\x1b[0;1;")
+		}
+		return per
+	}
+	single := strings.Count(Render("", Options{Width: cols, Height: rows, Force: true, Seed: 3, Pad: -1}), "\x1b[0;1;")
+	for p, n := range heads(rows) {
+		if n < single/2 {
+			t.Errorf("page %d has %d white heads, a single screen has %d", p+1, n, single)
+		}
+	}
+	thin := 0
+	for _, n := range heads(0) {
+		if n < single/2 {
+			thin++
+		}
+	}
+	if thin == 0 {
+		t.Log("without Screen every page was dense too; the test no longer shows the difference")
+	}
+}

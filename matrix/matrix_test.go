@@ -35,7 +35,7 @@ func TestColumnsFall(t *testing.T) {
 	// Find a column that is running, then check its head descends.
 	x := -1
 	for i := range m.col {
-		if m.col[i].active {
+		if _, ok := m.stream(i); ok {
 			x = i
 			break
 		}
@@ -43,12 +43,13 @@ func TestColumnsFall(t *testing.T) {
 	if x < 0 {
 		t.Skip("no column active at start with this seed")
 	}
-	before := m.col[x].head
+	c0, _ := m.stream(x)
+	before := c0.head
 	for i := 0; i < 10; i++ {
 		m.Frame(s, tw, th, dt)
 	}
-	if m.col[x].active && m.col[x].head <= before {
-		t.Errorf("column %d head did not descend: %v then %v", x, before, m.col[x].head)
+	if c, ok := m.stream(x); ok && c.head <= before {
+		t.Errorf("column %d head did not descend: %v then %v", x, before, c.head)
 	}
 }
 
@@ -100,9 +101,9 @@ func TestHeadIsBrightest(t *testing.T) {
 		return r + g + b
 	}
 	for x := 0; x < tw; x++ {
-		c := m.col[x]
+		c, active := m.stream(x)
 		head := int(c.head)
-		if !c.active || head < 1 || head >= th {
+		if !active || head < 1 || head >= th {
 			continue
 		}
 		hf := cells[head*w+x].Style.GetForeground()
@@ -125,7 +126,7 @@ func TestAllGlyphsAreSingleWidth(t *testing.T) {
 }
 
 func TestDeterministicForAGivenSeed(t *testing.T) {
-	run := func() []column {
+	run := func() [][]column {
 		s := simscreen.NewScreen()
 		if err := s.Init(); err != nil {
 			t.Fatalf("init screen: %v", err)
@@ -153,7 +154,7 @@ func TestDeterministicForAGivenSeed(t *testing.T) {
 // wall-clock interval must run the same number of steps however it is divided
 // into frames.
 func TestFrameRateIndependent(t *testing.T) {
-	run := func(frames int, step float64) []column {
+	run := func(frames int, step float64) [][]column {
 		s := simscreen.NewScreen()
 		if err := s.Init(); err != nil {
 			t.Fatalf("init screen: %v", err)
@@ -191,8 +192,9 @@ func TestOnlySomeStreamsAreHighlighted(t *testing.T) {
 	}
 
 	var live, hot int
-	for _, c := range m.col {
-		if !c.active {
+	for x := range m.col {
+		c, active := m.stream(x)
+		if !active {
 			continue
 		}
 		live++
@@ -227,8 +229,8 @@ func TestGlyphsChangeOnACommonBeat(t *testing.T) {
 
 	headRow := func() map[int]int {
 		h := map[int]int{}
-		for x, c := range m.col {
-			if c.active {
+		for x := range m.col {
+			if c, ok := m.stream(x); ok {
 				h[x] = int(c.head)
 			}
 		}
@@ -269,14 +271,16 @@ func TestTheHighlightedStreamsStammerTogether(t *testing.T) {
 	for i := 0; i < 400; i++ {
 		before := make([]float64, len(m.col))
 		wasActive := make([]bool, len(m.col))
-		for x, c := range m.col {
-			before[x], wasActive[x] = c.head, c.active
+		for x := range m.col {
+			c, ok := m.stream(x)
+			before[x], wasActive[x] = c.head, ok
 		}
 		m.step()
 
 		var hotHeld, hotMoved, coldMoved int
-		for x, c := range m.col {
-			if !wasActive[x] || !c.active {
+		for x := range m.col {
+			c, ok := m.stream(x)
+			if !wasActive[x] || !ok {
 				continue
 			}
 			moved := c.head != before[x]
@@ -337,8 +341,8 @@ func TestAChangedGlyphIsDimmedForOneStep(t *testing.T) {
 
 	checked := 0
 	for x := 0; x < tw; x++ {
-		c := m.col[x]
-		if !c.active {
+		c, active := m.stream(x)
+		if !active {
 			continue
 		}
 		for y := 0; y < th; y++ {
@@ -407,4 +411,13 @@ func TestBlendOffDrawsAtFullBrightness(t *testing.T) {
 	if draw(128) == draw(0) {
 		t.Error("the blend changed nothing that is drawn")
 	}
+}
+
+// stream is column x's stream and whether it has one. Without Screen a column
+// carries at most one, which is what these tests are about.
+func (m *Matrix) stream(x int) (column, bool) {
+	if s := m.col[x]; len(s) > 0 {
+		return s[len(s)-1], true
+	}
+	return column{}, false
 }
