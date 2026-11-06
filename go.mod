@@ -3,7 +3,7 @@ module github.com/0magnet/termanim
 go 1.26.0
 
 require (
-	github.com/0magnet/calvin v0.0.1-0.20261013221715-da6581155df3
+	github.com/0magnet/calvin v0.0.1-0.20261106130306-95511d0b3e30
 	github.com/0magnet/img2txt-go v0.0.1-0.20261013220954-ae0d760b7d2b
 	github.com/spf13/cobra v1.10.2
 	golang.org/x/term v0.47.0
@@ -23,7 +23,7 @@ require (
 	github.com/gdamore/tcell/v3 v3.6.0
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.4.1 // indirect
-	github.com/spf13/pflag v1.0.10 // indirect
+	github.com/spf13/pflag v1.1.0 // indirect
 	golang.org/x/sys v0.49.0 // indirect
 	golang.org/x/text v0.43.0 // indirect
 )
