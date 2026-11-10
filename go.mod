@@ -4,9 +4,9 @@ go 1.26.0
 
 require (
 	github.com/0magnet/calvin v0.0.1-0.20261109140133-887794fc87eb
-	github.com/0magnet/img2txt-go v0.0.1-0.20261013220954-ae0d760b7d2b
+	github.com/0magnet/img2txt-go v0.0.1-0.20261110133704-00072550f54b
 	github.com/spf13/cobra v1.10.2
-	golang.org/x/term v0.47.0
+	golang.org/x/term v0.48.0
 )
 
 require (
@@ -25,5 +25,5 @@ require (
 	github.com/lucasb-eyer/go-colorful v1.4.1 // indirect
 	github.com/spf13/pflag v1.1.0 // indirect
 	golang.org/x/sys v0.50.0 // indirect
-	golang.org/x/text v0.43.0 // indirect
+	golang.org/x/text v0.44.0 // indirect
 )

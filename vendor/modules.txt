@@ -5,7 +5,7 @@ github.com/0magnet/calvin/clihelp
 # github.com/0magnet/coloredcobra v1.0.4-0.20261012213101-faa6bd8f94c5
 ## explicit; go 1.26.0
 github.com/0magnet/coloredcobra
-# github.com/0magnet/img2txt-go v0.0.1-0.20261013220954-ae0d760b7d2b
+# github.com/0magnet/img2txt-go v0.0.1-0.20261110133704-00072550f54b
 ## explicit; go 1.26.0
 github.com/0magnet/img2txt-go/shape
 # github.com/clipperhouse/displaywidth v0.11.0
@@ -50,10 +50,10 @@ github.com/spf13/pflag
 golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/term v0.47.0
+# golang.org/x/term v0.48.0
 ## explicit; go 1.26.0
 golang.org/x/term
-# golang.org/x/text v0.43.0
+# golang.org/x/text v0.44.0
 ## explicit; go 1.26.0
 golang.org/x/text/encoding
 golang.org/x/text/encoding/internal/identifier
