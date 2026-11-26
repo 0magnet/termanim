@@ -1,9 +1,9 @@
-github.com/0magnet/calvin v0.0.1-0.20261123113739-17ec6c31723c h1:8JV9+t2ME+Oc54muPd01mDLY/8uP1grQZm3JdDjbe5Y=
-github.com/0magnet/calvin v0.0.1-0.20261123113739-17ec6c31723c/go.mod h1:tA4Bml06K/K3kO3d3IqSP2Uks2E3ycaBrzo4b0dzLgM=
+github.com/0magnet/calvin v0.0.1-0.20261125222219-4228c77b6748 h1:dTe+iYcIKKZtACgIsX6YMpyV+418zpTCZ7C7yPnjufE=
+github.com/0magnet/calvin v0.0.1-0.20261125222219-4228c77b6748/go.mod h1:tA4Bml06K/K3kO3d3IqSP2Uks2E3ycaBrzo4b0dzLgM=
 github.com/0magnet/coloredcobra v1.0.4-0.20261012213101-faa6bd8f94c5 h1:EitsijGOC/B/n+ziuxUBkIy9xhgVnmcDZVOW4eE1xGc=
 github.com/0magnet/coloredcobra v1.0.4-0.20261012213101-faa6bd8f94c5/go.mod h1:XOyBWsYWPuG3gboQHaOve/ubY8HaTqCGjJ+791sF5cM=
-github.com/0magnet/img2txt-go v0.0.1-0.20261123111343-1b18c2c35849 h1:7+wG1wCgQlJhf8dp5cuHrFYrU2Z0DOng8VXwsz/B0J8=
-github.com/0magnet/img2txt-go v0.0.1-0.20261123111343-1b18c2c35849/go.mod h1:SO1pJ+kD+8bL1SnSM+wG6m2r10kgI2ZOfa6cv3MZw2Y=
+github.com/0magnet/img2txt-go v0.0.1-0.20261125222217-cb06518f5b4d h1:BRTcAsY/V4jkCZXq20eWWxn7NHoVh/AZbTMnaAJNKO4=
+github.com/0magnet/img2txt-go v0.0.1-0.20261125222217-cb06518f5b4d/go.mod h1:SO1pJ+kD+8bL1SnSM+wG6m2r10kgI2ZOfa6cv3MZw2Y=
 github.com/clipperhouse/displaywidth v0.11.0 h1:lBc6kY44VFw+TDx4I8opi/EtL9m20WSEFgwIwO+UVM8=
 github.com/clipperhouse/displaywidth v0.11.0/go.mod h1:bkrFNkf81G8HyVqmKGxsPufD3JhNl3dSqnGhOoSD/o0=
 github.com/clipperhouse/uax29/v2 v2.7.0 h1:+gs4oBZ2gPfVrKPthwbMzWZDaAFPGYK72F0NJv2v7Vk=
